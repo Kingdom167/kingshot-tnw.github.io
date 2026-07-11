@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Night's Watch | TNW Portal</title>
+    <style>
+        :root {
+            --bg-dark: #070c14;
+            --bg-card: #0d1624;
+            --border-ice: #1b355a;
+            --glow-blue: #00d2ff;
+            --text-gold: #d4af37;
+            --text-light: #e2e8f0;
+            --victory-green: #2ecc71;
+            --draw-orange: #e67e22;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cinzel', 'Georgia', serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            background-image: radial-gradient(circle at 50% 0%, #102542 0%, #070c14 70%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding-bottom: 140px; /* Adjusted space for music player bar */
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid var(--border-ice);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            color: var(--text-light);
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            background: rgba(13, 22, 36, 0.9);
+            border-bottom: 1px solid var(--border-ice);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: var(--bg-card);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 16px;
+            border: 1px solid var(--border-ice);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .dropbtn:hover {
+            border-color: var(--glow-blue);
+            color: var(--glow-blue);
+        }
+
+        .dropdown-content {
+            display: none; 
+            position: absolute;
+            background-color: var(--bg-card);
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-ice);
+            z-index: 101;
+            right: 50%;
+            transform: translateX(50%);
+            margin-top: 5px;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--text-light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #16253b;
+            color: var(--text-gold);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CARDS & PANELS --- */
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-ice);
+            border-radius: 4px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .panel-title {
+            font-size: 1.6rem;
+            color: var(--text-gold);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-ice);
+            padding-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Grid systems */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        /* --- MODULE STYLES --- */
+        .event-card {
+            border: 1px solid var(--border-ice);
+            padding: 15px;
+            text-align: center;
+            background: rgba(25, 42, 69, 0.3);
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .event-card:hover { border-color: var(--glow-blue); }
+        .event-time { color: var(--glow-blue); font-size: 1.3rem; margin-top: 5px; font-weight: bold;}
+
+        .kvk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .kvk-table th, .kvk-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-ice);
+        }
+        .kvk-table th { background: #111d30; color: var(--text-gold); }
+        .status-victory { color: var(--victory-green); font-weight: bold; }
+        .status-draw { color: var(--draw-orange); font-weight: bold; }
+
+        .leader-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--border-ice);
+            background: #09101a;
+        }
+        .leader-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--text-gold);
+            margin: 0 auto 10px;
+            background: #1b355a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: var(--text-gold); }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: #070c14;
+            border: 1px solid var(--border-ice);
+            color: white;
+            border-radius: 4px;
+        }
+        button.btn {
+            background: #1b355a;
+            color: white;
+            border: 1px solid var(--glow-blue);
+            padding: 10px 20px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        button.btn:hover { background: var(--glow-blue); color: black; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            background: #111d30;
+            border: 1px solid var(--border-ice);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- PERSISTENT FOOTER MUSIC PLAYER --- */
+        .persistent-player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(13, 22, 36, 0.95);
+            border-top: 2px solid var(--border-ice);
+            padding: 15px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.6);
+            gap: 15px;
+        }
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.85rem;
+            min-width: 220px;
+        }
+        .player-info span { color: var(--glow-blue); font-weight: bold; }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--border-ice);
+            color: var(--text-light);
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .nav-btn:hover {
+            border-color: var(--glow-blue);
+            color: var(--glow-blue);
+        }
+        .persistent-player-bar audio {
+            max-height: 32px;
+        }
+        .copyright-text {
+            font-size: 0.75rem;
+            color: #556b85;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .persistent-player-bar {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+                gap: 10px;
+            }
+            .copyright-text { text-align: center; }
+            body { padding-bottom: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>THE NIGHT'S WATCH</h1>
+        <p>TNW | Kingdom 167 | Kingshot Portal</p>
+    </header>
+
+    <div class="nav-container">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown(event)">Navigate Portal ⚔️</button>
+            <div class="dropdown-content" id="dropdownMenu">
+                <a href="#" onclick="showPage('dashboard')">War Room Dashboard</a>
+                <a href="#" onclick="showPage('history')">KvK Match History</a>
+                <a href="#" onclick="showPage('leaders')">Leadership Council</a>
+                <a href="#" onclick="showPage('rules')">Kingdom Codex (Rules)</a>
+                <a href="#" onclick="showPage('guides')">Tactical Game Guides</a>
+                <a href="#" onclick="showPage('recruitment')">Join the Watch (Recruitment)</a>
+                <a href="#" onclick="showPage('governance')">Governance (Survey & Polls)</a>
+                <a href="#" onclick="showPage('gallery')">Chronicles (Gallery)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- PAGE 1: DASHBOARD (EVENTS) -->
+        <div id="dashboard" class="page-section active">
+            <div class="panel">
+                <div class="panel-title">Active Watch Operations (Alliance Events)</div>
+                <div class="grid-2">
+                    <div class="event-card">
+                        <h3>Bear Hunt</h3>
+                        <div class="event-time">01:00 & 18:15 UTC</div>
+                    </div>
+                    <div class="event-card">
+                        <h3>Swordland</h3>
+                        <div class="event-time">02:00 & 19:00 UTC</div>
+                    </div>
+                    <div class="event-card">
+                        <h3>Tri-Alliance</h3>
+                        <div class="event-time">02:00 & 19:00 UTC</div>
+                    </div>
+                    <div class="event-card">
+                        <h3>Vikings</h3>
+                        <div class="event-time">02:00 & 18:15 UTC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: KVK HISTORY -->
+        <div id="history" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Our Recent KvK Results</div>
+                <table class="kvk-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Campaign</th>
+                            <th>Outcome</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>25 April</td>
+                            <td>Kingdom Clash I</td>
+                            <td class="status-victory">VICTORY</td>
+                            <td>Prep + Castle Won</td>
+                        </tr>
+                        <tr>
+                            <td>23 May</td>
+                            <td>Frozen Marches II</td>
+                            <td class="status-draw">DRAW</td>
+                            <td>Prep Won, Castle Lost</td>
+                        </tr>
+                        <tr>
+                            <td>20 June</td>
+                            <td>The Great Wall Siege</td>
+                            <td class="status-victory">VICTORY</td>
+                            <td>Prep + Castle Won</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PAGE 3: LEADERS -->
+        <div id="leaders" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Alliance Command Structure</div>
+                <div class="grid-3">
+                    <div class="leader-card">
+                        <div class="leader-avatar">👑</div>
+                        <h3>Lord Commander</h3>
+                        <p style="color:var(--text-gold)">JonSnow_TNW</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-avatar">🦅</div>
+                        <h3>Transfer Manager</h3>
+                        <p style="color:var(--text-gold)">[RYL] Slickfinger</p>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-avatar">⚔️</div>
+                        <h3>First Ranger</h3>
+                        <p style="color:var(--text-gold)">Halfhand_TNW</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: KINGDOM RULES -->
+        <div id="rules" class="page-section">
+            <div class="panel">
+                <div class="panel-title">The Laws of Kingdom 167</div>
+                <div style="line-height: 1.8;">
+                    <p><strong>1. Tile Gathering Etiquette:</strong> Complete all resource tiles. Leaving resource nodes incomplete is strictly forbidden.</p>
+                    <p><strong>2. KvK Focus:</strong> During Kingdom vs Kingdom phases, all internal civil conflicts are suspended. Violators will face immediate banishment.</p>
+                    <p><strong>3. City Assaults:</strong> Attacking cities inside the top 5 allied networks without concrete proof of provocation is prohibited.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: GAME GUIDES -->
+        <div id="guides" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Kingshot Strategy Guides</div>
+                <h3>❄️ Mastering the Bear Hunt</h3>
+                <p style="margin-bottom: 15px; color:#aaa;">Ensure your highest tier damage commanders are fielded. Time your rallies cleanly with your lane partner to stack active buffs.</p>
+                
+                <h3>🛡️ KvK Defense Formations</h3>
+                <p style="color:#aaa;">Reinforce front towers with Infantry primary arrays. Keep flexible cavalry columns ready to cut off reinforcing rallies.</p>
+            </div>
+        </div>
+
+        <!-- PAGE 6: RECRUITMENT -->
+        <div id="recruitment" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Sworn Brothers Needed (Recruitment)</div>
+                <p style="margin-bottom: 20px; color: var(--glow-blue)"><strong>25 Slots Available Currently!</strong></p>
+                <p style="margin-bottom: 15px;">All applicants must possess an intolerance to the undead. Bonus points if you have faced a White Walker.</p>
+                
+                <form onsubmit="alert('Application flown via raven to Slickfinger!'); return false;">
+                    <div class="form-group">
+                        <label>In-Game Name</label>
+                        <input type="text" required placeholder="e.g., Grenn_TNW">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Power Level</label>
+                        <input type="text" required placeholder="e.g., 45,000,000">
+                    </div>
+                    <div class="form-group">
+                        <label>Why do you wish to take the Black?</label>
+                        <textarea rows="4" required placeholder="Describe your experience and active times..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Application to Council</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- PAGE 7: GOVERNANCE (SURVEY & POLLS) -->
+        <div id="governance" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Monthly Strategy Survey</div>
+                <p style="margin-bottom: 15px;">Submit your strategic theme ideas for our next upcoming KvK cycle.</p>
+                <form onsubmit="submitSurvey(event)">
+                    <div class="form-group">
+                        <label>Your Theme Idea & Strategy</label>
+                        <textarea id="surveyInput" rows="3" required placeholder="e.g., Defensive Turtle Shell Approach..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Idea</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Active Consensus Poll</div>
+                <p style="margin-bottom: 15px;">Vote on the top submitted theme ideas from the previous cycle:</p>
+                <div class="form-group">
+                    <input type="radio" id="opt1" name="kvk-poll" value="1">
+                    <label style="display:inline; margin-left: 10px;" for="opt1">Operation Frostbite (Hyper-aggressive early rally push)</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="opt2" name="kvk-poll" value="2">
+                    <label style="display:inline; margin-left: 10px;" for="opt2">The Shadow Tower Defense (Secure checkpoints, long attrition game)</label>
+                </div>
+                <button type="button" onclick="alert('Vote recorded! For the Watch!')" class="btn" style="margin-top: 10px;">Cast Vote</button>
+            </div>
+        </div>
+
+        <!-- PAGE 8: GALLERY -->
+        <div id="gallery" class="page-section">
+            <div class="panel">
+                <div class="panel-title">Chronicles of the Wall</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://picsum.photos/id/1016/300/300" alt="Snow Mountain"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/id/1022/300/300" alt="Northern Lights"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/id/1043/300/300" alt="Castle Ruin"></div>
+                    <div class="gallery-item"><img src="https://picsum.photos/id/1057/300/300" alt="Ice Wall"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ALWAYS VISIBLE MULTI-TRACK MUSIC PLAYER FOOTER -->
+    <div class="persistent-player-bar">
+        <div class="player-info">
+            <div style="color: var(--text-gold); font-size: 0.75rem; letter-spacing: 1px;">THE WALL CHRONICLES OST</div>
+            <div>Playing: <span id="current-track-title">Winterfell Ambient</span></div>
+        </div>
+        <div class="player-controls">
+            <button class="nav-btn" onclick="prevTrack()">⏮ Prev</button>
+            <audio id="audio-player" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <button class="nav-btn" onclick="nextTrack()">Next ⏭</button>
+        </div>
+        <div class="copyright-text">
+            TNW Portal © 2026<br>"Night gathers..."
+        </div>
+    </div>
+
+    <script>
+        const menu = document.getElementById('dropdownMenu');
+
+        // --- MUSIC PLAYER PLAYLIST STATE ---
+        const playlist = [
+            { title: "Winterfell Ambient", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+            { title: "Night Gathers (War Drums)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+            { title: "The Frozen Wall (Siege Theme)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+        ];
+        let currentTrackIndex = 0;
+        const audioPlayer = document.getElementById('audio-player');
+        const trackTitleDisplay = document.getElementById('current-track-title');
+
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            audioPlayer.src = playlist[currentTrackIndex].url;
+            trackTitleDisplay.textContent = playlist[currentTrackIndex].title;
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioPlayer.play().catch(() => {/* Handle browser autocomplete block safely */});
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioPlayer.play().catch(() => {});
+        }
+
+        // Auto-advance track queue when a song finishes playing
+        audioPlayer.onended = function() {
+            nextTrack();
+        };
+
+
+        // --- PORTAL DROPDOWN AND PAGE INTERACTION ---
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            menu.classList.toggle('show');
+        }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+            
+            menu.classList.remove('show');
+            window.scrollTo({ top: 180, behavior: 'smooth' });
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                if (menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                }
+            }
+        }
+
+        function submitSurvey(e) {
+            e.preventDefault();
+            const val = document.getElementById('surveyInput').value;
+            alert(`Strategy recorded: "${val}" has been added to the Review Log for next month's selection!`);
+            document.getElementById('surveyInput').value = '';
+        }
+
+        // Initialize first track on system initialization
+        loadTrack(0);
+    </script>
+</body>
+</html>

@@ -86,7 +86,7 @@
         to { transform: translateY(105vh); }
     }
 
-    /* --- INTRO HEADER STYLES (PREPENDED) --- */
+    /* --- TOP BANNER STYLES --- */
     .top-banner {
       background-color: #02060c;
       width: 100%;
@@ -187,6 +187,13 @@
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
     }
 
+    /* --- MERGED ACTION BUTTON SYSTEM --- */
+    .dropdown { 
+      position: relative; 
+      display: inline-block; 
+      z-index: 100;
+    }
+
     .header-btn {
       font-family: 'Cinzel', serif;
       font-size: 0.9rem;
@@ -199,6 +206,7 @@
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .header-btn:hover {
@@ -208,92 +216,20 @@
       box-shadow: 0 0 20px rgba(147, 197, 253, 0.3);
     }
 
-    /* --- PORTAL HERO AREA --- */
-    .hero-banner {
-        position: relative;
-        padding: 40px 20px 25px;
-        text-align: center;
-        background: linear-gradient(180deg, #0b1224 0%, #0e1830 55%, #0a1120 100%);
-        border-bottom: 1px solid var(--line);
-    }
-    .hero-banner::before {
-        content: "";
-        position: absolute; inset: -20% -10%;
-        background: conic-gradient(from 200deg at 50% 20%, rgba(143,216,255,0) 0deg, rgba(143,216,255,.10) 60deg, rgba(120,190,255,0) 140deg, rgba(215,178,95,.07) 220deg, rgba(143,216,255,0) 360deg);
-        filter: blur(18px);
-        z-index: 0;
-    }
-    .banner-title {
-        position: relative;
-        z-index: 3;
-        margin: 0 auto 15px;
-        max-width: 480px;
-        padding: 14px 24px;
-        clip-path: polygon(3% 0%, 97% 0%, 100% 22%, 100% 78%, 97% 100%, 3% 100%, 0% 78%, 0% 22%);
-        background: linear-gradient(180deg, #16223c 0%, #0c1526 60%, #0a1120 100%);
-        border: 1px solid var(--line);
-    }
-    .banner-title h1 {
-        font-weight: 900;
-        font-size: clamp(24px, 6vw, 36px);
-        letter-spacing: .05em;
-        background: linear-gradient(180deg, #ffffff 0%, #cfe9ff 45%, #8fb9dd 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-shadow: 0 0 18px rgba(143,216,255,.35);
-    }
-    .hero-subtitle {
-        font-size: 14px;
-        color: var(--gold);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 600;
-    }
-
-    /* --- STICKY NAVIGATION --- */
-    .nav-container {
-        display: flex;
-        justify-content: center;
-        background: rgba(10, 17, 32, 0.95);
-        border-bottom: 1px solid var(--line);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    .dropdown { position: relative; display: inline-block; }
-    .dropbtn {
-        background: linear-gradient(180deg, var(--panel-2), var(--panel));
-        color: var(--bone);
-        padding: 10px 24px;
-        font-size: 14px;
-        font-weight: 600;
-        border: 1px solid var(--line);
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        transition: 0.3s;
-    }
-    .dropbtn:hover {
-        border-color: var(--frost);
-        color: var(--frost-soft);
-        box-shadow: 0 0 10px rgba(143,216,255,0.2);
-    }
     .dropdown-content {
         display: none; 
         position: absolute;
         background-color: var(--ink);
-        min-width: 240px;
+        min-width: 260px;
         box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
         border: 1px solid var(--line);
         z-index: 101;
         right: 50%;
         transform: translateX(50%);
-        margin-top: 5px;
+        margin-top: 12px;
     }
     .dropdown-content.show { display: block; }
+    
     .dropdown-content a {
         color: var(--bone);
         padding: 12px 16px;
@@ -313,7 +249,7 @@
     /* --- CONTAINER WORKSPACE --- */
     .container {
         max-width: 720px;
-        margin: 24px auto;
+        margin: 40px auto;
         padding: 0 16px;
         position: relative;
         z-index: 10;
@@ -347,7 +283,7 @@
         text-shadow: 0 0 12px rgba(215,178,95,.25);
     }
 
-    /* --- INCORPORATED COMPONENT DESIGN: EVENT CONTAINER --- */
+    /* --- EVENT CONTAINER --- */
     .events-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -387,7 +323,7 @@
     .event-times { font-size: 15px; font-weight: 500; letter-spacing: .03em; color: var(--bone); }
     .event-times .unit { color: var(--bone-dim); font-size: 12px; letter-spacing: .08em; margin-left: 2px; }
 
-    /* --- INCORPORATED COMPONENT DESIGN: KVK MATCH SYSTEM --- */
+    /* --- KVK MATCH SYSTEM --- */
     .kvk-hint {
         text-align: center; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--frost-dim); margin: -4px 0 12px;
     }
@@ -711,13 +647,13 @@
   <!-- DRIFTING SNOWFALL LAYER -->
   <div class="snowfall" id="snowfall"></div>
 
-  <!-- PREPENDED: Top Banner -->
+  <!-- Top Banner -->
   <div class="top-banner">
     <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Logo" class="banner-logo">
     <span class="banner-title-prepend">THE NIGHT'S WATCH</span>
   </div>
 
-  <!-- PREPENDED: Main Epic Header Section -->
+  <!-- Main Epic Header Section -->
   <header class="nights-watch-header">
     <div class="header-content">
       <!-- Inverted Center Raven Logo -->
@@ -737,8 +673,21 @@
         We are the sworn brothers of the Wall — an alliance forged in the long night, bound by oath, standing between the realms of men and the darkness beyond.
       </p>
       
-      <!-- Action Button -->
-      <a href="#join" class="header-btn">TAKE THE BLACK</a>
+      <!-- MERGED INTERACTIVE BUTTON SYSTEM -->
+      <div class="dropdown">
+          <button class="header-btn font-display" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">NAVIGATE PORTAL ⚔️</button>
+          <div class="dropdown-content" id="dropdownMenu">
+              <a href="#" class="font-display" onclick="showPage(event, 'dashboard')">War Room Dashboard</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'rewards')">Sanctuary Rewards Matrix</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'history')">KvK Match History</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'leaders')">Leadership Council</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'rules')">Kingdom Codex (Rules)</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'guides')">Tactical Game Guides</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'recruitment')">Join the Watch (Recruitment)</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'governance')">Governance & Polls</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'gallery')">Chronicles (Gallery)</a>
+          </div>
+      </div>
     </div>
   </header>
 
@@ -776,32 +725,6 @@
       </symbol>
     </defs>
   </svg>
-
-  <!-- PORTAL HERO DISPLAY CONTAINER -->
-  <header class="hero-banner">
-      <div class="banner-title">
-          <h1 class="font-display">THE NIGHT'S WATCH</h1>
-      </div>
-      <p class="hero-subtitle">TNW | Kingdom 167 | Kingshot Portal</p>
-  </header>
-
-  <!-- NAVIGATION SYSTEM -->
-  <div class="nav-container">
-      <div class="dropdown">
-          <button class="dropbtn font-display" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">Navigate Portal ⚔️</button>
-          <div class="dropdown-content" id="dropdownMenu">
-              <a href="#" class="font-display" onclick="showPage(event, 'dashboard')">War Room Dashboard</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'rewards')">Sanctuary Rewards Matrix</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'history')">KvK Match History</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'leaders')">Leadership Council</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'rules')">Kingdom Codex (Rules)</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'guides')">Tactical Game Guides</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'recruitment')">Join the Watch (Recruitment)</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'governance')">Governance & Polls</a>
-              <a href="#" class="font-display" onclick="showPage(event, 'gallery')">Chronicles (Gallery)</a>
-          </div>
-      </div>
-  </div>
 
   <div class="container">
 
@@ -1059,7 +982,7 @@
       </div>
 
       <!-- PAGE 6: RECRUITMENT -->
-      <div id="recruitment" class="page-section" id="join">
+      <div id="recruitment" class="page-section">
           <div class="slots-panel">
               <div class="slots-count">
                   <div class="num font-display">25</div>
@@ -1153,7 +1076,7 @@
   <!-- ============================== SCRIPTS AND INTERACTIONS ============================== -->
   <script>
       const menu = document.getElementById('dropdownMenu');
-      const dropBtn = document.querySelector('.dropbtn');
+      const dropBtn = document.querySelector('.header-btn');
 
       // Storage arrays to simulate basic data tracking
       const globalApplications = [];
@@ -1264,7 +1187,7 @@
       }
 
       window.onclick = function(event) {
-          if (!event.target.matches('.dropbtn')) {
+          if (!event.target.matches('.header-btn')) {
               if (menu.classList.contains('show')) {
                   menu.classList.remove('show');
                   dropBtn.setAttribute('aria-expanded', 'false');

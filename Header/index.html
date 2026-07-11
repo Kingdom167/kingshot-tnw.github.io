@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Night's Watch | TNW Portal</title>
   
+  <!-- Google Fonts for Epic Fantasy Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
@@ -114,7 +116,7 @@
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    /* --- EPIC HEADER SECTION --- */
+    /* --- EPIC HEADER SECTION (UPDATED) --- */
     .nights-watch-header {
       position: relative;
       width: 100%;
@@ -126,9 +128,11 @@
       padding: 60px 20px;
       color: #e0f2fe; 
       
+      /* Matching top white line, added matching bottom white line, and fading image layers */
       border-top: 1px solid rgba(147, 197, 253, 0.4);
       border-bottom: 1px solid rgba(147, 197, 253, 0.4);
       
+      /* Replaced static linear gradient layout with a triple gradient composition that fades elegantly to black at the bottom */
       background: linear-gradient(to bottom, rgba(10, 25, 41, 0.2) 0%, rgba(5, 12, 22, 0.4) 60%, #000000 100%), 
                   url('https://cdn.discordapp.com/attachments/605031846459342868/1525507449493131384/IMG_7388.png?ex=6a53a306&is=6a525186&hm=c23355799b1d0153c0f4ee874703fb7046ba867dc844cdd9e3475e5b49d99a59&');
       background-size: cover;
@@ -191,7 +195,7 @@
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
     }
 
-    /* --- DROPDOWN ACTION SYSTEM --- */
+    /* --- MERGED ACTION BUTTON SYSTEM --- */
     .dropdown { 
       position: relative; 
       display: inline-block; 
@@ -648,23 +652,36 @@
 </head>
 <body>
 
+  <!-- DRIFTING SNOWFALL LAYER -->
   <div class="snowfall" id="snowfall"></div>
 
+  <!-- Top Banner -->
   <div class="top-banner">
     <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Logo" class="banner-logo">
     <span class="banner-title-prepend">THE NIGHT'S WATCH</span>
   </div>
 
+  <!-- Main Epic Header Section -->
   <header class="nights-watch-header">
     <div class="header-content">
+      <!-- Inverted Center Raven Logo -->
       <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Night's Watch Logo" class="header-logo">
+      
+      <!-- Subtitle -->
       <p class="header-est">EST. 8000 YEARS BEFORE THE CONQUEST</p>
+      
+      <!-- Main Title -->
       <h1 class="header-title">THE NIGHT'S<br>WATCH</h1>
+      
+      <!-- Quote -->
       <blockquote class="header-quote">“And now his watch is ended.”</blockquote>
+      
+      <!-- Description -->
       <p class="header-desc">
         We are the sworn brothers of the Wall — an alliance forged in the long night, bound by oath, standing between the realms of men and the darkness beyond.
       </p>
       
+      <!-- MERGED INTERACTIVE BUTTON SYSTEM -->
       <div class="dropdown">
           <button class="header-btn font-display" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">NAVIGATE PORTAL ⚔️</button>
           <div class="dropdown-content" id="dropdownMenu">
@@ -682,6 +699,7 @@
     </div>
   </header>
 
+  <!-- ============================== ART SPRITE VECTOR EMBEDS ============================== -->
   <svg class="sprite" style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
     <defs>
       <symbol id="icon-bear" viewBox="0 0 64 64">
@@ -718,6 +736,7 @@
 
   <div class="container">
 
+      <!-- PAGE 1: DASHBOARD -->
       <div id="dashboard" class="page-section active">
           <div class="section-heading">
               <h2 class="font-display">Active Watch Operations</h2>
@@ -746,6 +765,7 @@
           </div>
       </div>
 
+      <!-- PAGE: SANCTUARY REWARDS MATRIX -->
       <div id="rewards" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Sanctuary Rewards Matrix</h2>
@@ -783,14 +803,17 @@
               <table class="matrix-table" id="rewardsTable">
                   <thead>
                       <tr id="matrixHeader">
-                          </tr>
+                          <!-- Dynamic Content Headers -->
+                      </tr>
                   </thead>
                   <tbody id="matrixBody">
-                      </tbody>
+                      <!-- Dynamic Content Lines -->
+                  </tbody>
               </table>
           </div>
       </div>
 
+      <!-- PAGE 2: KVK HISTORY -->
       <div id="history" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">KvK Battle History</h2>
@@ -918,6 +941,7 @@
           </div>
       </div>
 
+      <!-- PAGE 3: LEADERS COUNCILS -->
       <div id="leaders" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Command Structure</h2>
@@ -941,10 +965,8 @@
           </div>
       </div>
 
+      <!-- PAGE 4: KINGDOM RULES -->
       <div id="rules" class="page-section">
-          <div class="section-heading">
-              <h2 class="font-display">Kingdom Laws</h2>
-          </div>
           <div class="panel">
               <div class="panel-title font-display">The Laws of Kingdom 167</div>
               <div class="rules-list">
@@ -955,10 +977,8 @@
           </div>
       </div>
 
+      <!-- PAGE 5: GAME STRATEGY GUIDES -->
       <div id="guides" class="page-section">
-          <div class="section-heading">
-              <h2 class="font-display">Tactical Blueprints</h2>
-          </div>
           <div class="panel">
               <div class="panel-title font-display">Mastering the Bear Hunt</div>
               <p style="color:var(--bone); line-height:1.5; margin-bottom:12px;">Ensure your highest tier damage commanders are fielded. Time your rallies cleanly with your lane partner to stack active buffs.</p>
@@ -969,10 +989,8 @@
           </div>
       </div>
 
+      <!-- PAGE 6: RECRUITMENT -->
       <div id="recruitment" class="page-section">
-          <div class="section-heading">
-              <h2 class="font-display">Join the watch</h2>
-          </div>
           <div class="slots-panel">
               <div class="slots-count">
                   <div class="num font-display">25</div>
@@ -1004,10 +1022,8 @@
           </div>
       </div>
 
+      <!-- PAGE 7: GOVERNANCE SURVEYS -->
       <div id="governance" class="page-section">
-          <div class="section-heading">
-              <h2 class="font-display">Council Ballots</h2>
-          </div>
           <div class="panel">
               <div class="panel-title font-display">Strategy Core Submission</div>
               <form onsubmit="submitSurvey(event)">
@@ -1034,6 +1050,7 @@
           </div>
       </div>
 
+      <!-- PAGE 8: CHRONICLES -->
       <div id="gallery" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Chronicles of the Wall</h2>
@@ -1048,6 +1065,7 @@
 
   </div>
 
+  <!-- PERSISTENT INTEGRATED TRACK CONTROLLER PLAYER FOOTER -->
   <div class="persistent-player-bar">
       <div class="player-info">
           <div class="track-label font-display">THE WALL CHRONICLES OST</div>
@@ -1063,6 +1081,7 @@
       </div>
   </div>
 
+  <!-- ============================== SCRIPTS AND INTERACTIONS ============================== -->
   <script>
       const menu = document.getElementById('dropdownMenu');
       const dropBtn = document.querySelector('.header-btn');
@@ -1172,10 +1191,7 @@
           
           menu.classList.remove('show');
           dropBtn.setAttribute('aria-expanded', 'false');
-          
-          // Elements view scrolling target focus adjustment calculation
-          const headerHeight = document.querySelector('.nights-watch-header').offsetHeight;
-          window.scrollTo({ top: headerHeight + 40, behavior: 'smooth' });
+          window.scrollTo({ top: 120, behavior: 'smooth' });
       }
 
       window.onclick = function(event) {
@@ -1273,7 +1289,7 @@
               const targetRow = tbody.querySelector(`tr[data-row-idx="${rowVal}"]`);
               if(targetRow) targetRow.classList.add('highlight-row');
           } else if (colVal !== "none") {
-              tbody.querySelectorAll(`td[data-col-idx="${colVal}"]`).forEach(td => td.mathbf{classList}.add('highlight-cell'));
+              tbody.querySelectorAll(`td[data-col-idx="${colVal}"]`).forEach(td => td.classList.add('highlight-cell'));
           }
       }
 

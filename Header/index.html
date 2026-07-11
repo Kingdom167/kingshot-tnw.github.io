@@ -24,16 +24,45 @@
       overflow-x: hidden;
     }
 
-    /* Header Container */
+    /* Top Navigation Banner */
+    .top-banner {
+      background-color: #02060c;
+      width: 100%;
+      padding: 15px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      /* The single crisp white/ice-blue separating line at the bottom */
+      border-bottom: 1px solid rgba(147, 197, 253, 0.4);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-logo {
+      height: 45px;
+      width: auto;
+      /* Uses the requested invert(1) filter to change the white logo to dark/black */
+      filter: invert(1) drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    }
+
+    .banner-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      letter-spacing: 0.35em;
+      color: #cbd5e1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Main Header Container */
     .nights-watch-header {
       position: relative;
       width: 100%;
-      min-height: 100vh;
+      min-height: calc(100vh - 76px); /* Adjusts for the top banner height */
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
       color: #e0f2fe; /* Soft ice-blue text */
       
       /* Background Image Layering with a dark overlay for legibility */
@@ -53,12 +82,12 @@
       align-items: center;
     }
 
-    /* Logo Styling */
+    /* Main Center Logo Styling */
     .header-logo {
       width: 160px;
       height: auto;
       margin-bottom: 45px;
-      /* Inverts the white image to black and applies a subtle dark shadow */
+      /* Keeping this logo inverted as requested in the previous step */
       filter: invert(1) drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
     }
 
@@ -129,6 +158,9 @@
 
     /* Responsive adjustments for mobile screens */
     @media (max-width: 600px) {
+      .top-banner { padding: 12px 20px; gap: 15px; }
+      .banner-logo { height: 35px; }
+      .banner-title { font-size: 1rem; letter-spacing: 0.25em; }
       .header-title { font-size: 2.5rem; }
       .header-quote { font-size: 1.4rem; }
       .header-desc { font-size: 1.15rem; }
@@ -139,9 +171,16 @@
 </head>
 <body>
 
+  <!-- New Top Banner -->
+  <div class="top-banner">
+    <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Logo" class="banner-logo">
+    <span class="banner-title">THE NIGHT'S WATCH</span>
+  </div>
+
+  <!-- Main Website Section -->
   <header class="nights-watch-header">
     <div class="header-content">
-      <!-- Raven Logo -->
+      <!-- Inverted Center Raven Logo -->
       <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Night's Watch Logo" class="header-logo">
       
       <!-- Subtitle -->

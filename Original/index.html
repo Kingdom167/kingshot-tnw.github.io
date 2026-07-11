@@ -209,7 +209,7 @@
             gap: 14px;
             margin: 20px 0 16px;
         }
-        .section-heading::before { background: linear-gradient(90deg, transparent, var(--gold-dim)); content: ""; flex: 1; height: 1px; height: 1px; }
+        .section-heading::before { background: linear-gradient(90deg, transparent, var(--gold-dim)); content: ""; flex: 1; height: 1px; }
         .section-heading::after { background: linear-gradient(90deg, var(--gold-dim), transparent); content: ""; flex: 1; height: 1px; }
         .section-heading h2 {
             font-weight: 600;
@@ -453,14 +453,16 @@
         }
         .matrix-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate; /* Required for sticky table header components */
+            border-spacing: 0;
             text-align: left;
             font-size: 14px;
             min-width: 800px;
         }
         .matrix-table th, .matrix-table td {
             padding: 10px 12px;
-            border: 1px solid var(--line-soft);
+            border-right: 1px solid var(--line-soft);
+            border-bottom: 1px solid var(--line-soft);
         }
         .matrix-table th {
             background-color: var(--panel-2);
@@ -470,21 +472,35 @@
             font-size: 12px;
             letter-spacing: 1px;
         }
+        
+        /* FIX: Added solid backgrounds and elevated explicit z-index values to hide sliding columns */
         .matrix-table th:first-child, .matrix-table td:first-child {
             position: sticky;
             left: 0;
-            background-color: var(--ink);
             border-right: 2px solid var(--line);
-            z-index: 2;
+            z-index: 10;
             font-weight: bold;
-            color: var(--bone);
             min-width: 100px;
+        }
+        .matrix-table th:first-child {
+            background-color: var(--panel-2) !important;
+            color: var(--gold-bright);
+        }
+        .matrix-table td:first-child {
+            background-color: var(--ink) !important;
+            color: var(--bone);
+        }
+        .matrix-table tr:nth-child(even) td:first-child {
+            background-color: #0b1528 !important; /* Matches alternative row styling rules */
         }
         .matrix-table tr:nth-child(even) td {
             background-color: rgba(25, 42, 74, 0.2);
         }
         .matrix-table tr.highlight-row td {
             background-color: rgba(215, 178, 95, 0.15) !important;
+        }
+        .matrix-table tr.highlight-row td:first-child {
+            background-color: #262423 !important; /* Tinted blend layer for sticky row highlights */
         }
         .matrix-table td.highlight-cell {
             background-color: rgba(143, 216, 255, 0.25) !important;
@@ -897,7 +913,7 @@
                         <input type="text" id="identityTag" required placeholder="e.g., Grenn_TNW">
                     </div>
                     <div class="form-group">
-                        <label for="powerLevel">Current Heroic Power Level</label>
+                        <label pour="powerLevel">Current Heroic Power Level</label>
                         <input type="text" id="powerLevel" required placeholder="e.g., 45,000,000">
                     </div>
                     <div class="form-group">

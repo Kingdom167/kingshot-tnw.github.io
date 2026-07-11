@@ -29,7 +29,7 @@
             background-image: radial-gradient(circle at 50% 0%, #102542 0%, #070c14 70%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 120px; /* Space for persistent music player */
+            padding-bottom: 140px; /* Adjusted space for music player bar */
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -90,7 +90,6 @@
             color: var(--glow-blue);
         }
 
-        /* Controlled explicitly via JavaScript toggle class */
         .dropdown-content {
             display: none; 
             position: absolute;
@@ -104,7 +103,6 @@
             margin-top: 5px;
         }
 
-        /* JavaScript applies this class to open the menu */
         .dropdown-content.show {
             display: block;
         }
@@ -260,37 +258,60 @@
             width: 100%;
             background: rgba(13, 22, 36, 0.95);
             border-top: 2px solid var(--border-ice);
-            padding: 12px 20px;
+            padding: 15px 20px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             z-index: 999;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.6);
+            gap: 15px;
         }
         .player-info {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.85rem;
+            min-width: 220px;
         }
-        .player-info span { color: var(--text-gold); font-weight: bold; }
+        .player-info span { color: var(--glow-blue); font-weight: bold; }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--border-ice);
+            color: var(--text-light);
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .nav-btn:hover {
+            border-color: var(--glow-blue);
+            color: var(--glow-blue);
+        }
         .persistent-player-bar audio {
             max-height: 32px;
         }
         .copyright-text {
             font-size: 0.75rem;
             color: #556b85;
+            text-align: right;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .persistent-player-bar {
                 flex-direction: column;
-                gap: 8px;
                 text-align: center;
-                padding: 10px;
+                padding: 12px;
+                gap: 10px;
             }
-            body { padding-bottom: 160px; }
+            .copyright-text { text-align: center; }
+            body { padding-bottom: 180px; }
         }
     </style>
 </head>
@@ -303,7 +324,6 @@
 
     <div class="nav-container">
         <div class="dropdown">
-            <!-- Added click event directly to button -->
             <button class="dropbtn" onclick="toggleDropdown(event)">Navigate Portal ⚔️</button>
             <div class="dropdown-content" id="dropdownMenu">
                 <a href="#" onclick="showPage('dashboard')">War Room Dashboard</a>
@@ -499,47 +519,78 @@
 
     </div>
 
-    <!-- ALWAYS VISIBLE FIXED BOTTOM PLAYER -->
+    <!-- ALWAYS VISIBLE MULTI-TRACK MUSIC PLAYER FOOTER -->
     <div class="persistent-player-bar">
         <div class="player-info">
-            🛡️ <span>The Wall Ost:</span> Ambient War Drums
+            <div style="color: var(--text-gold); font-size: 0.75rem; letter-spacing: 1px;">THE WALL CHRONICLES OST</div>
+            <div>Playing: <span id="current-track-title">Winterfell Ambient</span></div>
         </div>
-        <div>
-            <audio id="audio-player" controls loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        <div class="player-controls">
+            <button class="nav-btn" onclick="prevTrack()">⏮ Prev</button>
+            <audio id="audio-player" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <button class="nav-btn" onclick="nextTrack()">Next ⏭</button>
         </div>
         <div class="copyright-text">
-            TNW Portal © 2026 | "Night gathers..."
+            TNW Portal © 2026<br>"Night gathers..."
         </div>
     </div>
 
     <script>
         const menu = document.getElementById('dropdownMenu');
 
-        // Toggle dropdown display cleanly on button click
+        // --- MUSIC PLAYER PLAYLIST STATE ---
+        const playlist = [
+            { title: "Winterfell Ambient", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+            { title: "Night Gathers (War Drums)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+            { title: "The Frozen Wall (Siege Theme)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+        ];
+        let currentTrackIndex = 0;
+        const audioPlayer = document.getElementById('audio-player');
+        const trackTitleDisplay = document.getElementById('current-track-title');
+
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            audioPlayer.src = playlist[currentTrackIndex].url;
+            trackTitleDisplay.textContent = playlist[currentTrackIndex].title;
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioPlayer.play().catch(() => {/* Handle browser autocomplete block safely */});
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioPlayer.play().catch(() => {});
+        }
+
+        // Auto-advance track queue when a song finishes playing
+        audioPlayer.onended = function() {
+            nextTrack();
+        };
+
+
+        // --- PORTAL DROPDOWN AND PAGE INTERACTION ---
         function toggleDropdown(event) {
-            event.stopPropagation(); // Prevents immediate close from global window click listener
+            event.stopPropagation();
             menu.classList.toggle('show');
         }
 
         function showPage(pageId) {
-            // 1. Hide all pages
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => page.classList.remove('active'));
 
-            // 2. Show selected page
             const selectedPage = document.getElementById(pageId);
             if (selectedPage) {
                 selectedPage.classList.add('active');
             }
             
-            // 3. Absolute forced closure of dropdown menu on link click
             menu.classList.remove('show');
-
-            // 4. Smooth scroll back near top
             window.scrollTo({ top: 180, behavior: 'smooth' });
         }
 
-        // Global safeguard: Close dropdown instantly if user clicks anywhere else on the screen
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
                 if (menu.classList.contains('show')) {
@@ -554,6 +605,9 @@
             alert(`Strategy recorded: "${val}" has been added to the Review Log for next month's selection!`);
             document.getElementById('surveyInput').value = '';
         }
+
+        // Initialize first track on system initialization
+        loadTrack(0);
     </script>
 </body>
 </html>

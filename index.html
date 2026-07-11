@@ -29,7 +29,7 @@
             background-image: radial-gradient(circle at 50% 0%, #102542 0%, #070c14 70%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 120px; /* Space for the persistent music player */
+            padding-bottom: 120px; /* Space for persistent music player */
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -90,9 +90,9 @@
             color: var(--glow-blue);
         }
 
-        /* Using a class target for absolute programmatic control */
+        /* Controlled explicitly via JavaScript toggle class */
         .dropdown-content {
-            display: none;
+            display: none; 
             position: absolute;
             background-color: var(--bg-card);
             min-width: 250px;
@@ -102,6 +102,11 @@
             right: 50%;
             transform: translateX(50%);
             margin-top: 5px;
+        }
+
+        /* JavaScript applies this class to open the menu */
+        .dropdown-content.show {
+            display: block;
         }
 
         .dropdown-content a {
@@ -118,11 +123,6 @@
         .dropdown-content a:hover {
             background-color: #16253b;
             color: var(--text-gold);
-        }
-
-        /* Show menu on hover, but toggleable over JavaScript */
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
 
         /* --- MAIN LAYOUT --- */
@@ -170,7 +170,7 @@
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
-        /* --- SPECIFIC MODULE STYLES --- */
+        /* --- MODULE STYLES --- */
         .event-card {
             border: 1px solid var(--border-ice);
             padding: 15px;
@@ -302,8 +302,9 @@
     </header>
 
     <div class="nav-container">
-        <div class="dropdown" id="portalDropdown">
-            <button class="dropbtn">Navigate Portal ⚔️</button>
+        <div class="dropdown">
+            <!-- Added click event directly to button -->
+            <button class="dropbtn" onclick="toggleDropdown(event)">Navigate Portal ⚔️</button>
             <div class="dropdown-content" id="dropdownMenu">
                 <a href="#" onclick="showPage('dashboard')">War Room Dashboard</a>
                 <a href="#" onclick="showPage('history')">KvK Match History</a>
@@ -498,7 +499,7 @@
 
     </div>
 
-    <!-- ALWAYS VISIBLE MUSIC PLAYER + FOOTER BAR -->
+    <!-- ALWAYS VISIBLE FIXED BOTTOM PLAYER -->
     <div class="persistent-player-bar">
         <div class="player-info">
             🛡️ <span>The Wall Ost:</span> Ambient War Drums
@@ -512,6 +513,14 @@
     </div>
 
     <script>
+        const menu = document.getElementById('dropdownMenu');
+
+        // Toggle dropdown display cleanly on button click
+        function toggleDropdown(event) {
+            event.stopPropagation(); // Prevents immediate close from global window click listener
+            menu.classList.toggle('show');
+        }
+
         function showPage(pageId) {
             // 1. Hide all pages
             const pages = document.querySelectorAll('.page-section');
@@ -523,16 +532,20 @@
                 selectedPage.classList.add('active');
             }
             
-            // 3. FORCE CLOSE DROPDOWN MENU
-            const menu = document.getElementById('dropdownMenu');
-            menu.style.display = 'none';
-            // Restore normal hover functions after a tiny delay
-            setTimeout(() => {
-                menu.style.display = '';
-            }, 200);
+            // 3. Absolute forced closure of dropdown menu on link click
+            menu.classList.remove('show');
 
             // 4. Smooth scroll back near top
             window.scrollTo({ top: 180, behavior: 'smooth' });
+        }
+
+        // Global safeguard: Close dropdown instantly if user clicks anywhere else on the screen
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                if (menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                }
+            }
         }
 
         function submitSurvey(e) {

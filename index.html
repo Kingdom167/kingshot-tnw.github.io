@@ -29,7 +29,7 @@
             background-image: radial-gradient(circle at 50% 0%, #102542 0%, #070c14 70%);
             background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 60px;
+            padding-bottom: 120px; /* Space for the persistent music player */
         }
 
         /* --- HEADER & NAVIGATION --- */
@@ -90,6 +90,7 @@
             color: var(--glow-blue);
         }
 
+        /* Using a class target for absolute programmatic control */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -119,6 +120,7 @@
             color: var(--text-gold);
         }
 
+        /* Show menu on hover, but toggleable over JavaScript */
         .dropdown:hover .dropdown-content {
             display: block;
         }
@@ -169,7 +171,6 @@
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
         /* --- SPECIFIC MODULE STYLES --- */
-        /* Events */
         .event-card {
             border: 1px solid var(--border-ice);
             padding: 15px;
@@ -181,7 +182,6 @@
         .event-card:hover { border-color: var(--glow-blue); }
         .event-time { color: var(--glow-blue); font-size: 1.3rem; margin-top: 5px; font-weight: bold;}
 
-        /* KvK Match History */
         .kvk-table {
             width: 100%;
             border-collapse: collapse;
@@ -196,7 +196,6 @@
         .status-victory { color: var(--victory-green); font-weight: bold; }
         .status-draw { color: var(--draw-orange); font-weight: bold; }
 
-        /* Leaders */
         .leader-card {
             text-align: center;
             padding: 20px;
@@ -216,10 +215,7 @@
             font-size: 2rem;
         }
 
-        /* Forms / Inputs */
-        .form-group {
-            margin-bottom: 15px;
-        }
+        .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; color: var(--text-gold); }
         input[type="text"], textarea, select {
             width: 100%;
@@ -240,7 +236,6 @@
         }
         button.btn:hover { background: var(--glow-blue); color: black; }
 
-        /* Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -253,32 +248,49 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #555;
-            position: relative;
             overflow: hidden;
         }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Music Player */
-        .music-player {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #09101a;
-            padding: 15px;
-            border: 1px solid var(--border-ice);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #556b85;
-            border-top: 1px solid var(--border-ice);
+        /* --- PERSISTENT FOOTER MUSIC PLAYER --- */
+        .persistent-player-bar {
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
-            background: var(--bg-dark);
+            background: rgba(13, 22, 36, 0.95);
+            border-top: 2px solid var(--border-ice);
+            padding: 12px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.6);
+        }
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        .player-info span { color: var(--text-gold); font-weight: bold; }
+        .persistent-player-bar audio {
+            max-height: 32px;
+        }
+        .copyright-text {
+            font-size: 0.75rem;
+            color: #556b85;
+        }
+
+        @media (max-width: 600px) {
+            .persistent-player-bar {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+                padding: 10px;
+            }
+            body { padding-bottom: 160px; }
         }
     </style>
 </head>
@@ -290,9 +302,9 @@
     </header>
 
     <div class="nav-container">
-        <div class="dropdown">
+        <div class="dropdown" id="portalDropdown">
             <button class="dropbtn">Navigate Portal ⚔️</button>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="dropdownMenu">
                 <a href="#" onclick="showPage('dashboard')">War Room Dashboard</a>
                 <a href="#" onclick="showPage('history')">KvK Match History</a>
                 <a href="#" onclick="showPage('leaders')">Leadership Council</a>
@@ -307,7 +319,7 @@
 
     <div class="container">
 
-        <!-- PAGE 1: DASHBOARD (EVENTS & MUSIC) -->
+        <!-- PAGE 1: DASHBOARD (EVENTS) -->
         <div id="dashboard" class="page-section active">
             <div class="panel">
                 <div class="panel-title">Active Watch Operations (Alliance Events)</div>
@@ -328,17 +340,6 @@
                         <h3>Vikings</h3>
                         <div class="event-time">02:00 & 18:15 UTC</div>
                     </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-title">Soundtrack of the Wall</div>
-                <div class="music-player">
-                    <div>
-                        <strong>Atmospheric Theme:</strong> <span id="track-title">Winterfell Ambience</span>
-                    </div>
-                    <!-- Replace src with an actual audio file link if desired -->
-                    <audio id="audio-player" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
                 </div>
             </div>
         </div>
@@ -497,24 +498,41 @@
 
     </div>
 
-    <footer>
-        "Night gathers, and now my watch begins..." | TNW Portal © 2026
-    </footer>
+    <!-- ALWAYS VISIBLE MUSIC PLAYER + FOOTER BAR -->
+    <div class="persistent-player-bar">
+        <div class="player-info">
+            🛡️ <span>The Wall Ost:</span> Ambient War Drums
+        </div>
+        <div>
+            <audio id="audio-player" controls loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        </div>
+        <div class="copyright-text">
+            TNW Portal © 2026 | "Night gathers..."
+        </div>
+    </div>
 
     <script>
         function showPage(pageId) {
-            // Hide all pages
+            // 1. Hide all pages
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => page.classList.remove('active'));
 
-            // Show selected page
+            // 2. Show selected page
             const selectedPage = document.getElementById(pageId);
             if (selectedPage) {
                 selectedPage.classList.add('active');
             }
             
-            // Scroll to the top of content dynamically
-            window.scrollTo({ top: 200, behavior: 'smooth' });
+            // 3. FORCE CLOSE DROPDOWN MENU
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = 'none';
+            // Restore normal hover functions after a tiny delay
+            setTimeout(() => {
+                menu.style.display = '';
+            }, 200);
+
+            // 4. Smooth scroll back near top
+            window.scrollTo({ top: 180, behavior: 'smooth' });
         }
 
         function submitSurvey(e) {

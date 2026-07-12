@@ -1,0 +1,1301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Night's Watch | TNW Portal</title>
+  
+  <!-- Google Fonts for Epic Fantasy Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CORE DESIGN SYSTEM TOKENS --- */
+    :root {
+        --void:      #05070d;
+        --ink:       #0a1120;
+        --panel:     #0e1830;
+        --panel-2:   #13203c;
+        --panel-3:   #182a4a;
+
+        --line:        #2a3f60;
+        --line-soft:   #1b2c47;
+        --frost:       #8fd8ff;
+        --frost-soft:  #c8ecff;
+        --frost-dim:   #3d6480;
+
+        --gold:        #d7b25f;
+        --gold-bright: #f4d999;
+        --gold-dim:    #7a642f;
+        --bone:        #e9e3d2;
+        --bone-dim:    #a9a28e;
+
+        --victory:      #62c07f;
+        --victory-glow: rgba(98,192,127,.5);
+        --draw:         #e2953a;
+        --draw-glow:    rgba(226,149,58,.5);
+        --comeback:      #8fd8ff;
+        --comeback-glow: rgba(143,216,255,.5);
+        --defeat:        #c25a55;
+        --defeat-glow:   rgba(194,90,85,.5);
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      color: var(--bone);
+      font-family: 'Barlow Condensed', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 120px;
+      overflow-x: hidden;
+      background: radial-gradient(ellipse at 50% 0%, #101d38 0%, var(--ink) 45%, var(--void) 100%);
+      background-attachment: fixed;
+    }
+
+    .font-display { 
+        font-family: 'Cinzel', serif; 
+    }
+
+    /* Ambient Performance Layers */
+    .snowfall { 
+        position: fixed; 
+        inset: 0; 
+        z-index: 1; 
+        pointer-events: none; 
+        overflow: hidden; 
+    }
+    .snowfall span {
+        position: absolute; 
+        top: -5%;
+        width: 3px; 
+        height: 3px;
+        background: var(--frost-soft);
+        border-radius: 50%;
+        opacity: .55;
+        filter: drop-shadow(0 0 2px var(--frost));
+        animation: fall linear infinite;
+    }
+    @keyframes fall {
+        to { transform: translateY(105vh); }
+    }
+
+    /* --- TOP BANNER STYLES --- */
+    .top-banner {
+      background-color: #02060c;
+      width: 100%;
+      padding: 15px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid rgba(147, 197, 253, 0.4);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 10;
+    }
+
+    .banner-logo {
+      height: 45px;
+      width: auto;
+      filter: invert(1) drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    }
+
+    .banner-title-prepend {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      letter-spacing: 0.35em;
+      color: #cbd5e1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- EPIC HEADER SECTION (UPDATED) --- */
+    .nights-watch-header {
+      position: relative;
+      width: 100%;
+      min-height: calc(100vh - 76px); 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+      color: #e0f2fe; 
+      
+      /* Matching top white line, added matching bottom white line, and fading image layers */
+      border-top: 1px solid rgba(147, 197, 253, 0.4);
+      border-bottom: 1px solid rgba(147, 197, 253, 0.4);
+      
+      /* Replaced static linear gradient layout with a triple gradient composition that fades elegantly to black at the bottom */
+      background: linear-gradient(to bottom, rgba(10, 25, 41, 0.2) 0%, rgba(5, 12, 22, 0.4) 60%, #000000 100%), 
+                  url('https://cdn.discordapp.com/attachments/605031846459342868/1525507449493131384/IMG_7388.png?ex=6a53a306&is=6a525186&hm=c23355799b1d0153c0f4ee874703fb7046ba867dc844cdd9e3475e5b49d99a59&');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 2;
+    }
+
+    .header-content {
+      max-width: 680px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header-logo {
+      width: 160px;
+      height: auto;
+      margin-bottom: 45px;
+      filter: invert(1) drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
+    }
+
+    .header-est {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.45em;
+      color: #93c5fd;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 3.8rem;
+      line-height: 1.15;
+      letter-spacing: 0.05em;
+      margin: 0 0 35px 0;
+      color: #f0fdf4;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 0 25px rgba(147, 197, 253, 0.2);
+    }
+
+    .header-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.65rem;
+      color: #cbd5e1;
+      margin: 0 0 30px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .header-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      line-height: 1.65;
+      color: #94a3b8;
+      margin-bottom: 55px;
+      max-width: 560px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+    }
+
+    /* --- MERGED ACTION BUTTON SYSTEM --- */
+    .dropdown { 
+      position: relative; 
+      display: inline-block; 
+      z-index: 100;
+    }
+
+    .header-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      color: #93c5fd;
+      text-decoration: none;
+      padding: 15px 45px;
+      border: 1px solid rgba(147, 197, 253, 0.35);
+      background: rgba(10, 25, 41, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .header-btn:hover {
+      background: rgba(147, 197, 253, 0.15);
+      border-color: #93c5fd;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(147, 197, 253, 0.3);
+    }
+
+    .dropdown-content {
+        display: none; 
+        position: absolute;
+        background-color: var(--ink);
+        min-width: 260px;
+        box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
+        border: 1px solid var(--line);
+        z-index: 101;
+        right: 50%;
+        transform: translateX(50%);
+        margin-top: 12px;
+    }
+    .dropdown-content.show { display: block; }
+    
+    .dropdown-content a {
+        color: var(--bone);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        transition: 0.2s;
+        font-size: 14px;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--line-soft);
+    }
+    .dropdown-content a:hover {
+        background-color: var(--panel-2);
+        color: var(--gold-bright);
+    }
+
+    /* --- CONTAINER WORKSPACE --- */
+    .container {
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 16px;
+        position: relative;
+        z-index: 10;
+    }
+    .page-section {
+        display: none;
+        animation: fadeIn 0.5s ease forwards;
+    }
+    .page-section.active { display: block; }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Generic Section Headings */
+    .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 20px 0 16px;
+    }
+    .section-heading::before { background: linear-gradient(90deg, transparent, var(--gold-dim)); content: ""; flex: 1; height: 1px; }
+    .section-heading::after { background: linear-gradient(90deg, var(--gold-dim), transparent); content: ""; flex: 1; height: 1px; }
+    .section-heading h2 {
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: .12em;
+        color: var(--gold-bright);
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-shadow: 0 0 12px rgba(215,178,95,.25);
+    }
+
+    /* --- EVENT CONTAINER --- */
+    .events-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+    }
+    .event-card {
+        position: relative;
+        background: linear-gradient(160deg, var(--panel-2) 0%, var(--ink) 100%);
+        padding: 20px 14px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        transition: background .25s ease;
+    }
+    .event-card:hover { background: linear-gradient(160deg, var(--panel-3) 0%, var(--ink) 100%); }
+    .event-icon {
+        width: 56px; height: 56px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        background: radial-gradient(circle at 35% 30%, #1c2f52 0%, #0a1120 72%);
+        border: 1px solid var(--frost-dim);
+        box-shadow: 0 0 0 4px rgba(143,216,255,.05), inset 0 0 12px rgba(0,0,0,.6);
+        color: var(--frost-soft);
+    }
+    .event-icon svg { width: 30px; height: 30px; filter: drop-shadow(0 0 4px rgba(143,216,255,.35)); }
+    .event-name {
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: .045em;
+        color: var(--gold-bright);
+        text-transform: uppercase;
+    }
+    .event-times { font-size: 15px; font-weight: 500; letter-spacing: .03em; color: var(--bone); }
+    .event-times .unit { color: var(--bone-dim); font-size: 12px; letter-spacing: .08em; margin-left: 2px; }
+
+    /* --- KVK MATCH SYSTEM --- */
+    .kvk-hint {
+        text-align: center; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--frost-dim); margin: -4px 0 12px;
+    }
+    .kvk-scroll {
+        display: flex;
+        gap: 0;
+        padding: 6px 0 20px;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        scrollbar-width: thin;
+        scrollbar-color: var(--frost-dim) transparent;
+    }
+    .kvk-scroll::-webkit-scrollbar { height: 5px; }
+    .kvk-scroll::-webkit-scrollbar-thumb { background: var(--frost-dim); border-radius: 3px; }
+    .kvk-card {
+        position: relative;
+        flex: 0 0 142px;
+        scroll-snap-align: start;
+        padding: 16px 10px 18px;
+        text-align: center;
+        border: 1px solid var(--line);
+        border-left: 1px solid var(--line-soft);
+        background: var(--ink);
+    }
+    .kvk-card:first-child { border-left: 1px solid var(--line); }
+    .kvk-card + .kvk-card { margin-left: -1px; }
+    .kvk-num { font-weight: 600; font-size: 12.5px; letter-spacing: .08em; color: var(--gold); margin-bottom: 4px; }
+    .kvk-date { font-size: 12px; letter-spacing: .06em; color: var(--bone-dim); text-transform: uppercase; margin-bottom: 2px; }
+    .kvk-kingdom { font-size: 12.5px; letter-spacing: .04em; color: var(--frost-soft); margin-bottom: 10px; }
+    .kvk-node { width: 7px; height: 7px; margin: 0 auto 12px; border-radius: 50%; background: var(--frost); box-shadow: 0 0 8px var(--frost); }
+    .kvk-icon { width: 26px; height: 26px; margin: 0 auto 10px; }
+    .kvk-icon svg { width: 100%; height: 100%; }
+    
+    .kvk-icon.domination { color: var(--victory); filter: drop-shadow(0 0 5px rgba(98,192,127,.4)); }
+    .kvk-icon.draw { color: var(--draw); filter: drop-shadow(0 0 5px rgba(226,149,58,.35)); }
+    .kvk-icon.comeback { color: var(--comeback); filter: drop-shadow(0 0 5px rgba(143,216,255,.35)); }
+    .kvk-icon.defeat { color: var(--defeat); filter: drop-shadow(0 0 5px rgba(194,90,85,.4)); }
+    
+    .kvk-result { font-weight: 700; font-size: 15.5px; letter-spacing: .04em; margin-bottom: 6px; text-transform: uppercase; }
+    .kvk-result.domination { color: var(--victory); text-shadow: 0 0 14px var(--victory-glow); }
+    .kvk-result.draw { color: var(--draw); text-shadow: 0 0 14px var(--draw-glow); }
+    .kvk-result.comeback { color: var(--comeback); text-shadow: 0 0 14px var(--comeback-glow); }
+    .kvk-result.defeat { color: var(--defeat); text-shadow: 0 0 14px var(--defeat-glow); }
+    .kvk-sub { font-size: 11.5px; line-height: 1.3; color: var(--bone-dim); letter-spacing: .03em; text-transform: uppercase; }
+
+    /* --- PANEL STRUCTURES --- */
+    .panel {
+        background: linear-gradient(150deg, var(--panel-2) 0%, var(--ink) 75%);
+        border: 1px solid var(--line);
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    .panel-title {
+        font-size: 16px;
+        color: var(--gold-bright);
+        margin-bottom: 18px;
+        border-bottom: 1px solid var(--line-soft);
+        padding-bottom: 8px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+    .rules-list p {
+        margin-bottom: 14px;
+        line-height: 1.5;
+        font-size: 15px;
+    }
+    .rules-list strong { color: var(--frost-soft); }
+
+    /* Forms Layout & Styling */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; color: var(--gold); font-size: 14px; letter-spacing: 1px; text-transform: uppercase;}
+    input[type="text"], textarea, select {
+        width: 100%;
+        padding: 10px 12px;
+        background: var(--void);
+        border: 1px solid var(--line);
+        color: var(--bone);
+        font-family: inherit;
+        font-size: 15px;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--frost);
+    }
+    button.btn {
+        background: linear-gradient(180deg, var(--panel-3), var(--panel-2));
+        color: var(--bone);
+        border: 1px solid var(--line);
+        padding: 10px 20px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    button.btn:hover { border-color: var(--frost); color: var(--frost-soft); }
+
+    /* Structural Framework Configurations */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .leader-card {
+        text-align: center;
+        padding: 20px 10px;
+        border: 1px solid var(--line-soft);
+        background: var(--void);
+    }
+    .leader-avatar {
+        width: 64px; height: 64px;
+        border-radius: 50%;
+        border: 1px solid var(--gold-dim);
+        margin: 0 auto 12px;
+        background: var(--panel);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 24px;
+    }
+
+    /* --- RECRUIT SLOTS PANEL --- */
+    .slots-panel {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: linear-gradient(150deg, var(--panel-2) 0%, var(--ink) 75%);
+        border: 1px solid var(--frost-dim);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .slots-count { text-align: center; flex: none; }
+    .slots-count .num {
+        font-size: 42px; font-weight: 900; line-height: 1;
+        background: linear-gradient(180deg, var(--frost-soft), var(--frost) 60%, var(--frost-dim));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .slots-count .lbl { font-size: 11px; letter-spacing: .12em; color: var(--bone-dim); text-transform: uppercase; }
+    .slots-copy h3 { font-size: 18px; color: var(--frost-soft); margin-bottom: 4px; }
+    .slots-copy p { font-size: 14px; color: var(--bone); line-height: 1.4; }
+
+    /* --- CHRONICLES GRID ARCHITECTURE --- */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .gallery-item {
+        aspect-ratio: 1;
+        background: var(--void);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%) contrast(110%); }
+
+    /* --- SANCTUARY REWARDS DESIGNS --- */
+    .reward-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .tab-btn {
+        flex: 1;
+        background: var(--void);
+        border: 1px solid var(--line-soft);
+        color: var(--bone-dim);
+        padding: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 1px;
+        transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+        background: linear-gradient(180deg, var(--panel-3), var(--panel-2));
+        border-color: var(--frost);
+        color: var(--frost-soft);
+    }
+    .matrix-filter-wrapper {
+        background: var(--void);
+        border: 1px solid var(--line-soft);
+        padding: 12px;
+        margin-bottom: 16px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .scrollable-matrix {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        background: var(--void);
+        scrollbar-width: thin;
+        scrollbar-color: var(--line) transparent;
+    }
+    .matrix-table {
+        width: 100%;
+        border-collapse: separate; 
+        border-spacing: 0;
+        text-align: left;
+        font-size: 14px;
+        min-width: 800px;
+    }
+    .matrix-table th, .matrix-table td {
+        padding: 10px 12px;
+        border-right: 1px solid var(--line-soft);
+        border-bottom: 1px solid var(--line-soft);
+    }
+    .matrix-table th {
+        background-color: var(--panel-2);
+        color: var(--gold-bright);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    
+    .matrix-table th:first-child, .matrix-table td:first-child {
+        position: sticky;
+        left: 0;
+        border-right: 2px solid var(--line);
+        z-index: 10;
+        font-weight: bold;
+        min-width: 100px;
+    }
+    .matrix-table th:first-child {
+        background-color: var(--panel-2) !important;
+        color: var(--gold-bright);
+    }
+    .matrix-table td:first-child {
+        background-color: var(--ink) !important;
+        color: var(--bone);
+    }
+    .matrix-table tr:nth-child(even) td:first-child {
+        background-color: #0b1528 !important; 
+    }
+    .matrix-table tr:nth-child(even) td {
+        background-color: rgba(25, 42, 74, 0.2);
+    }
+    .matrix-table tr.highlight-row td {
+        background-color: rgba(215, 178, 95, 0.15) !important;
+    }
+    .matrix-table tr.highlight-row td:first-child {
+        background-color: #262423 !important; 
+    }
+    .matrix-table td.highlight-cell {
+        background-color: rgba(143, 216, 255, 0.25) !important;
+        color: #fff;
+        font-weight: 600;
+        box-shadow: inset 0 0 4px var(--frost);
+    }
+    
+    /* Tactical Loot Labels */
+    .loot-tag {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .loot-shards { background-color: rgba(215, 178, 95, 0.2); color: var(--gold-bright); border: 1px solid var(--gold-dim); }
+    .loot-buff { background-color: rgba(98, 192, 127, 0.2); color: var(--victory); border: 1px solid rgba(98,192,127,0.4); }
+    .loot-speed { background-color: rgba(143, 216, 255, 0.2); color: var(--frost-soft); border: 1px solid var(--frost-dim); }
+    .loot-epic { background-color: rgba(160, 90, 240, 0.2); color: #d4bcff; border: 1px solid #734bb3; }
+    .loot-utility { background-color: rgba(194, 90, 85, 0.2); color: #f29b96; border: 1px solid var(--defeat); }
+
+    /* --- PERSISTENT FOOTER MUSIC BAR CONTROLS --- */
+    .persistent-player-bar {
+        position: fixed;
+        bottom: 0; left: 0; width: 100%;
+        background: linear-gradient(180deg, var(--ink) 0%, #060a14 100%);
+        border-top: 1px solid var(--line);
+        padding: 16px 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 999;
+        box-shadow: 0 -8px 32px rgba(0,0,0,0.8);
+        gap: 15px;
+    }
+    .player-info { display: flex; flex-direction: column; min-width: 200px; }
+    .player-info .track-label { color: var(--gold); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px;}
+    .player-info .track-title { color: var(--frost-soft); font-weight: 600; font-size: 14px; }
+    .player-controls { display: flex; align-items: center; gap: 12px; }
+    .player-controls audio {
+        height: 32px;
+        filter: invert(88%) hue-rotate(175deg) contrast(.9);
+        border-radius: 4px;
+    }
+    .nav-btn {
+        background: transparent;
+        border: 1px solid var(--line-soft);
+        color: var(--bone);
+        padding: 6px 12px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.2s;
+    }
+    .nav-btn:hover { border-color: var(--frost); color: var(--frost); }
+    .copyright-text { font-size: 12px; color: var(--bone-dim); text-align: right; line-height: 1.4; }
+
+    /* Mobile Responsive Customizations */
+    @media (max-width: 768px) {
+        .top-banner { padding: 12px 20px; gap: 15px; }
+        .banner-logo { height: 35px; }
+        .banner-title-prepend { font-size: 1rem; letter-spacing: 0.25em; }
+        .header-title { font-size: 2.5rem; }
+        .header-quote { font-size: 1.4rem; }
+        .header-desc { font-size: 1.15rem; }
+        .header-logo { width: 130px; margin-bottom: 30px; }
+        .header-est { letter-spacing: 0.3em; font-size: 0.75rem; }
+        
+        .persistent-player-bar { flex-direction: column; text-align: center; padding: 16px; gap: 12px; }
+        .copyright-text { text-align: center; }
+        body { padding-bottom: 190px; }
+        .events-grid { grid-template-columns: 1fr; }
+        .matrix-filter-wrapper { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DRIFTING SNOWFALL LAYER -->
+  <div class="snowfall" id="snowfall"></div>
+
+  <!-- Top Banner -->
+  <div class="top-banner">
+    <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Logo" class="banner-logo">
+    <span class="banner-title-prepend">THE NIGHT'S WATCH</span>
+  </div>
+
+  <!-- Main Epic Header Section -->
+  <header class="nights-watch-header">
+    <div class="header-content">
+      <!-- Inverted Center Raven Logo -->
+      <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Night's Watch Logo" class="header-logo">
+      
+      <!-- Subtitle -->
+      <p class="header-est">EST. 8000 YEARS BEFORE THE CONQUEST</p>
+      
+      <!-- Main Title -->
+      <h1 class="header-title">THE NIGHT'S<br>WATCH</h1>
+      
+      <!-- Quote -->
+      <blockquote class="header-quote">“And now his watch is ended.”</blockquote>
+      
+      <!-- Description -->
+      <p class="header-desc">
+        We are the sworn brothers of the Wall — an alliance forged in the long night, bound by oath, standing between the realms of men and the darkness beyond.
+      </p>
+      
+      <!-- MERGED INTERACTIVE BUTTON SYSTEM -->
+      <div class="dropdown">
+          <button class="header-btn font-display" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">NAVIGATE PORTAL ⚔️</button>
+          <div class="dropdown-content" id="dropdownMenu">
+              <a href="#" class="font-display" onclick="showPage(event, 'dashboard')">War Room Dashboard</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'rewards')">Sanctuary Rewards Matrix</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'history')">KvK Match History</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'leaders')">Leadership Council</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'rules')">Kingdom Codex (Rules)</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'guides')">Tactical Game Guides</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'recruitment')">Join the Watch (Recruitment)</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'governance')">Governance & Polls</a>
+              <a href="#" class="font-display" onclick="showPage(event, 'gallery')">Chronicles (Gallery)</a>
+          </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== ART SPRITE VECTOR EMBEDS ============================== -->
+  <svg class="sprite" style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
+    <defs>
+      <symbol id="icon-bear" viewBox="0 0 64 64">
+        <circle cx="16" cy="20" r="7" fill="none" stroke="currentColor" stroke-width="3.4"/><circle cx="48" cy="20" r="7" fill="none" stroke="currentColor" stroke-width="3.4"/><circle cx="32" cy="36" r="18" fill="none" stroke="currentColor" stroke-width="3.4"/><ellipse cx="32" cy="42" rx="8" ry="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="40" r="2" fill="currentColor"/><circle cx="24.5" cy="32" r="2" fill="currentColor"/><circle cx="39.5" cy="32" r="2" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-swords" viewBox="0 0 64 64">
+        <line x1="12" y1="52" x2="48" y2="14" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="34" y1="30" x2="42" y2="22" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><circle cx="12" cy="52" r="3.2" fill="currentColor"/><line x1="52" y1="52" x2="16" y2="14" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="30" y1="30" x2="22" y2="22" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><circle cx="52" cy="52" r="3.2" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-trident" viewBox="0 0 64 64">
+        <line x1="32" y1="20" x2="32" y2="56" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="17" y1="20" x2="47" y2="20" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><line x1="19" y1="20" x2="19" y2="7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><line x1="32" y1="20" x2="32" y2="5" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><line x1="45" y1="20" x2="45" y2="7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><line x1="23" y1="34" x2="41" y2="30" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-helm" viewBox="0 0 64 64">
+        <path d="M14,40 L14,32 A18,18 0 0 1 50,32 L50,40" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="14" y1="40" x2="14" y2="48" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="50" y1="40" x2="50" y2="48" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><path d="M15,29 C4,26 2,14 11,7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><path d="M49,29 C60,26 62,14 53,7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><line x1="32" y1="34" x2="32" y2="48" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><line x1="23" y1="37" x2="41" y2="37" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-crown" viewBox="0 0 64 64">
+        <path d="M8,46 L11,22 L23,34 L32,16 L41,34 L53,22 L56,46 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><rect x="8" y="46" width="48" height="7" fill="currentColor"/><circle cx="11" cy="22" r="3" fill="currentColor"/><circle cx="32" cy="16" r="3" fill="currentColor"/><circle cx="53" cy="22" r="3" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-handshake" viewBox="0 0 64 40">
+        <path d="M10,18 L44,18 L46,16 L54,20 L46,24 L44,22 L10,22 L10,25 L6,25 L6,22 L2,22 L2,18 L6,18 L6,15 L10,15 Z" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 64 64">
+        <path d="M32,6 L52,13 L52,30 C52,44 43,53 32,58 C21,53 12,44 12,30 L12,13 Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+        <line x1="32" y1="20" x2="32" y2="44" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        <line x1="22" y1="32" x2="42" y2="32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-skull" viewBox="0 0 64 64">
+        <path d="M32,8 C18,8 11,18 11,29 C11,37 15,42 19,45 L19,52 C19,54.2 20.8,56 23,56 L26,56 L26,51 L29,51 L29,56 L35,56 L35,51 L38,51 L38,56 L41,56 C43.2,56 45,54.2 45,52 L45,45 C49,42 53,37 53,29 C53,18 46,8 32,8 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+        <circle cx="23.5" cy="29" r="5" fill="currentColor"/>
+        <circle cx="40.5" cy="29" r="5" fill="currentColor"/>
+        <path d="M32,33 L28,42 L36,42 Z" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="container">
+
+      <!-- PAGE 1: DASHBOARD -->
+      <div id="dashboard" class="page-section active">
+          <div class="section-heading">
+              <h2 class="font-display">Active Watch Operations</h2>
+          </div>
+          <div class="events-grid">
+              <div class="event-card">
+                  <div class="event-icon"><svg><use href="#icon-bear"/></svg></div>
+                  <div class="event-name font-display">Bear Hunt</div>
+                  <div class="event-times">01:00 &amp; 18:15 <span class="unit">UTC</span></div>
+              </div>
+              <div class="event-card">
+                  <div class="event-icon"><svg><use href="#icon-swords"/></svg></div>
+                  <div class="event-name font-display">Swordland</div>
+                  <div class="event-times">02:00 &amp; 19:00 <span class="unit">UTC</span></div>
+              </div>
+              <div class="event-card">
+                  <div class="event-icon"><svg><use href="#icon-trident"/></svg></div>
+                  <div class="event-name font-display">Tri-Alliance</div>
+                  <div class="event-times">02:00 &amp; 19:00 <span class="unit">UTC</span></div>
+              </div>
+              <div class="event-card">
+                  <div class="event-icon"><svg><use href="#icon-helm"/></svg></div>
+                  <div class="event-name font-display">Vikings</div>
+                  <div class="event-times">02:00 &amp; 18:15 <span class="unit">UTC</span></div>
+              </div>
+          </div>
+      </div>
+
+      <!-- PAGE: SANCTUARY REWARDS MATRIX -->
+      <div id="rewards" class="page-section">
+          <div class="section-heading">
+              <h2 class="font-display">Sanctuary Rewards Matrix</h2>
+          </div>
+          
+          <div class="reward-tabs">
+              <button class="tab-btn active" onclick="switchMatrixTab('sanctuaries')">Sanctuaries</button>
+              <button class="tab-btn" onclick="switchMatrixTab('fortresses')">Fortresses</button>
+          </div>
+
+          <div class="matrix-filter-wrapper">
+              <div style="flex: 1;">
+                  <label for="structureSelect" style="font-size:12px;">Highlight Structure</label>
+                  <select id="structureSelect" onchange="highlightMatrixTable()">
+                      <option value="none">-- Select Line --</option>
+                  </select>
+              </div>
+              <div style="flex: 1;">
+                  <label for="phaseSelect" style="font-size:12px;">Highlight Event Phase</label>
+                  <select id="phaseSelect" onchange="highlightMatrixTable()">
+                      <option value="none">-- Select Phase --</option>
+                      <option value="1">Phase 1</option>
+                      <option value="2">Phase 2</option>
+                      <option value="3">Phase 3</option>
+                      <option value="4">Phase 4</option>
+                      <option value="5">Phase 5</option>
+                      <option value="6">Phase 6</option>
+                      <option value="7">Phase 7</option>
+                      <option value="8">Phase 8</option>
+                  </select>
+              </div>
+          </div>
+
+          <div class="scrollable-matrix">
+              <table class="matrix-table" id="rewardsTable">
+                  <thead>
+                      <tr id="matrixHeader">
+                          <!-- Dynamic Content Headers -->
+                      </tr>
+                  </thead>
+                  <tbody id="matrixBody">
+                      <!-- Dynamic Content Lines -->
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+      <!-- PAGE 2: KVK HISTORY -->
+      <div id="history" class="page-section">
+          <div class="section-heading">
+              <h2 class="font-display">KvK Battle History</h2>
+          </div>
+          <div class="kvk-hint">Swipe Horizon For Records →</div>
+          
+          <div class="kvk-scroll">
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #15</div>
+                  <div class="kvk-date">20 Jun 2026</div>
+                  <div class="kvk-kingdom">Kingdom 396</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon domination"><svg><use href="#icon-crown"/></svg></div>
+                  <div class="kvk-result domination font-display">Domination</div>
+                  <div class="kvk-sub">Prep: W · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #14</div>
+                  <div class="kvk-date">23 May 2026</div>
+                  <div class="kvk-kingdom">Kingdom 108</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon draw"><svg><use href="#icon-handshake"/></svg></div>
+                  <div class="kvk-result draw font-display">Draw</div>
+                  <div class="kvk-sub">Prep: W · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #13</div>
+                  <div class="kvk-date">25 Apr 2026</div>
+                  <div class="kvk-kingdom">Kingdom 5</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon domination"><svg><use href="#icon-crown"/></svg></div>
+                  <div class="kvk-result domination font-display">Domination</div>
+                  <div class="kvk-sub">Prep: W · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #12</div>
+                  <div class="kvk-date">28 Mar 2026</div>
+                  <div class="kvk-kingdom">Kingdom 87</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon draw"><svg><use href="#icon-handshake"/></svg></div>
+                  <div class="kvk-result draw font-display">Draw</div>
+                  <div class="kvk-sub">Prep: W · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #11</div>
+                  <div class="kvk-date">28 Feb 2026</div>
+                  <div class="kvk-kingdom">Kingdom 188</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon domination"><svg><use href="#icon-crown"/></svg></div>
+                  <div class="kvk-result domination font-display">Domination</div>
+                  <div class="kvk-sub">Prep: W · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #10</div>
+                  <div class="kvk-date">31 Jan 2026</div>
+                  <div class="kvk-kingdom">Kingdom 120</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon domination"><svg><use href="#icon-crown"/></svg></div>
+                  <div class="kvk-result domination font-display">Domination</div>
+                  <div class="kvk-sub">Prep: W · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #9</div>
+                  <div class="kvk-date">03 Jan 2026</div>
+                  <div class="kvk-kingdom">Kingdom 151</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon draw"><svg><use href="#icon-handshake"/></svg></div>
+                  <div class="kvk-result draw font-display">Draw</div>
+                  <div class="kvk-sub">Prep: W · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #8</div>
+                  <div class="kvk-date">06 Dec 2025</div>
+                  <div class="kvk-kingdom">Kingdom 127</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon draw"><svg><use href="#icon-handshake"/></svg></div>
+                  <div class="kvk-result draw font-display">Draw</div>
+                  <div class="kvk-sub">Prep: W · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #7</div>
+                  <div class="kvk-date">08 Nov 2025</div>
+                  <div class="kvk-kingdom">Kingdom 134</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon comeback"><svg><use href="#icon-shield"/></svg></div>
+                  <div class="kvk-result comeback font-display">Comeback</div>
+                  <div class="kvk-sub">Prep: L · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #6</div>
+                  <div class="kvk-date">11 Oct 2025</div>
+                  <div class="kvk-kingdom">Kingdom 154</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon defeat"><svg><use href="#icon-skull"/></svg></div>
+                  <div class="kvk-result defeat font-display">Defeat</div>
+                  <div class="kvk-sub">Prep: L · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #5</div>
+                  <div class="kvk-date">14 Sep 2025</div>
+                  <div class="kvk-kingdom">Kingdom 136</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon defeat"><svg><use href="#icon-skull"/></svg></div>
+                  <div class="kvk-result defeat font-display">Defeat</div>
+                  <div class="kvk-sub">Prep: L · Battle: L</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #4</div>
+                  <div class="kvk-date">16 Aug 2025</div>
+                  <div class="kvk-kingdom">Kingdom 146</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon domination"><svg><use href="#icon-crown"/></svg></div>
+                  <div class="kvk-result domination font-display">Domination</div>
+                  <div class="kvk-sub">Prep: W · Battle: W</div>
+              </div>
+              <div class="kvk-card">
+                  <div class="kvk-num font-display">KvK #3</div>
+                  <div class="kvk-date">19 Jul 2025</div>
+                  <div class="kvk-kingdom">Kingdom 157</div>
+                  <div class="kvk-node"></div>
+                  <div class="kvk-icon draw"><svg><use href="#icon-handshake"/></svg></div>
+                  <div class="kvk-result draw font-display">Draw</div>
+                  <div class="kvk-sub">Prep: W · Battle: L</div>
+              </div>
+          </div>
+      </div>
+
+      <!-- PAGE 3: LEADERS COUNCILS -->
+      <div id="leaders" class="page-section">
+          <div class="section-heading">
+              <h2 class="font-display">Command Structure</h2>
+          </div>
+          <div class="grid-3">
+              <div class="leader-card">
+                  <div class="leader-avatar">👑</div>
+                  <h3 class="font-display" style="font-size:16px;">Lord Commander</h3>
+                  <p style="color:var(--gold); font-size:15px; font-weight:600; margin-top:4px;">JonSnow_TNW</p>
+              </div>
+              <div class="leader-card">
+                  <div class="leader-avatar">🦅</div>
+                  <h3 class="font-display" style="font-size:16px;">Transfer Manager</h3>
+                  <p style="color:var(--gold); font-size:15px; font-weight:600; margin-top:4px;">[RYL] Slickfinger</p>
+              </div>
+              <div class="leader-card">
+                  <div class="leader-avatar">⚔️</div>
+                  <h3 class="font-display" style="font-size:16px;">First Ranger</h3>
+                  <p style="color:var(--gold); font-size:15px; font-weight:600; margin-top:4px;">Halfhand_TNW</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- PAGE 4: KINGDOM RULES -->
+      <div id="rules" class="page-section">
+          <div class="panel">
+              <div class="panel-title font-display">The Laws of Kingdom 167</div>
+              <div class="rules-list">
+                  <p><strong>1. Tile Gathering Etiquette:</strong> Complete all resource tiles. Leaving resource nodes incomplete is strictly forbidden.</p>
+                  <p><strong>2. KvK Focus:</strong> During Kingdom vs Kingdom phases, all internal civil conflicts are suspended. Violators face immediate banishment.</p>
+                  <p><strong>3. City Assaults:</strong> Attacking allied networks without structural dynamic authorization from the council is completely prohibited.</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- PAGE 5: GAME STRATEGY GUIDES -->
+      <div id="guides" class="page-section">
+          <div class="panel">
+              <div class="panel-title font-display">Mastering the Bear Hunt</div>
+              <p style="color:var(--bone); line-height:1.5; margin-bottom:12px;">Ensure your highest tier damage commanders are fielded. Time your rallies cleanly with your lane partner to stack active buffs.</p>
+          </div>
+          <div class="panel">
+              <div class="panel-title font-display">KvK Defense Formations</div>
+              <p style="color:var(--bone); line-height:1.5;">Reinforce front towers with Infantry primary arrays. Keep flexible cavalry columns ready to cut off reinforcing enemy rallies.</p>
+          </div>
+      </div>
+
+      <!-- PAGE 6: RECRUITMENT -->
+      <div id="recruitment" class="page-section">
+          <div class="slots-panel">
+              <div class="slots-count">
+                  <div class="num font-display">25</div>
+                  <div class="lbl">Slots Open</div>
+              </div>
+              <div class="slots-copy">
+                  <h3 class="font-display">Sworn Brothers Needed</h3>
+                  <p>All applicants must possess an intolerance to the undead. Applications reviewed by Transfer Manager <strong>[RYL] Slickfinger</strong>.</p>
+              </div>
+          </div>
+
+          <div class="panel">
+              <div class="panel-title font-display">Submit Application Scroll</div>
+              <form id="recruitmentForm" onsubmit="submitApplication(event)">
+                  <div class="form-group">
+                      <label for="identityTag">In-Game Identity Tag</label>
+                      <input type="text" id="identityTag" required placeholder="e.g., Grenn_TNW">
+                  </div>
+                  <div class="form-group">
+                      <label for="powerLevel">Current Heroic Power Level</label>
+                      <input type="text" id="powerLevel" required placeholder="e.g., 45,000,000">
+                  </div>
+                  <div class="form-group">
+                      <label for="experienceText">Why do you wish to take the Black?</label>
+                      <textarea id="experienceText" rows="4" required placeholder="Describe your battlefield experience..."></textarea>
+                  </div>
+                  <button type="submit" class="btn font-display">Dispatch Raven Flight</button>
+              </form>
+          </div>
+      </div>
+
+      <!-- PAGE 7: GOVERNANCE SURVEYS -->
+      <div id="governance" class="page-section">
+          <div class="panel">
+              <div class="panel-title font-display">Strategy Core Submission</div>
+              <form onsubmit="submitSurvey(event)">
+                  <div class="form-group">
+                      <label for="surveyInput">Theme Idea & Campaign Blueprint</label>
+                      <textarea id="surveyInput" rows="3" required placeholder="Describe the layout for tower paths..."></textarea>
+                  </div>
+                  <button type="submit" class="btn font-display">Log Strategy Idea</button>
+              </form>
+          </div>
+          
+          <div class="panel">
+              <div class="panel-title font-display">Consensus Ballot</div>
+              <p style="margin-bottom:14px; font-size:14px; color:var(--bone-dim);">Vote on the strategic layout from last cycle:</p>
+              <div class="form-group">
+                  <input type="radio" id="opt1" name="kvk-poll" value="1">
+                  <label style="display:inline; margin-left:8px;" for="opt1">Operation Frostbite (Hyper-aggressive push)</label>
+              </div>
+              <div class="form-group">
+                  <input type="radio" id="opt2" name="kvk-poll" value="2">
+                  <label style="display:inline; margin-left:8px;" for="opt2">Shadow Tower Defense (Checkpoint Attrition)</label>
+              </div>
+              <button type="button" onclick="alert('Vote recorded! For the Watch!')" class="btn font-display" style="margin-top:10px;">Cast Ballot</button>
+          </div>
+      </div>
+
+      <!-- PAGE 8: CHRONICLES -->
+      <div id="gallery" class="page-section">
+          <div class="section-heading">
+              <h2 class="font-display">Chronicles of the Wall</h2>
+          </div>
+          <div class="gallery-grid">
+              <div class="gallery-item"><img src="https://picsum.photos/id/1016/300/300" alt="Snow Mountain"></div>
+              <div class="gallery-item"><img src="https://picsum.photos/id/1022/300/300" alt="Northern Lights"></div>
+              <div class="gallery-item"><img src="https://picsum.photos/id/1043/300/300" alt="Castle Ruin"></div>
+              <div class="gallery-item"><img src="https://picsum.photos/id/1057/300/300" alt="Ice Wall"></div>
+          </div>
+      </div>
+
+  </div>
+
+  <!-- PERSISTENT INTEGRATED TRACK CONTROLLER PLAYER FOOTER -->
+  <div class="persistent-player-bar">
+      <div class="player-info">
+          <div class="track-label font-display">THE WALL CHRONICLES OST</div>
+          <div class="track-title" id="current-track-title">Winterfell Ambient</div>
+      </div>
+      <div class="player-controls">
+          <button class="nav-btn" aria-label="Previous Track" onclick="prevTrack()">⏮</button>
+          <audio id="audio-player" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+          <button class="nav-btn" aria-label="Next Track" onclick="nextTrack()">⏭</button>
+      </div>
+      <div class="copyright-text font-display">
+          TNW Portal © 2026<br><span style="color:var(--gold-dim); font-size:11px;">"Night gathers..."</span>
+      </div>
+  </div>
+
+  <!-- ============================== SCRIPTS AND INTERACTIONS ============================== -->
+  <script>
+      const menu = document.getElementById('dropdownMenu');
+      const dropBtn = document.querySelector('.header-btn');
+
+      // Storage arrays to simulate basic data tracking
+      const globalApplications = [];
+      const globalStrategies = [];
+
+      // Matrix Raw Visual Source Structured Data
+      const matrixData = {
+          sanctuaries: [
+              ["Sanct 1", "Shards", "Health Buff", "Speedups", "Teleports", "Epic Shards", "Health Buff", "Speedups", "XP Hero"],
+              ["Sanct 2", "Teleports", "Shards", "Health Buff", "XP Hero", "XP Hero", "Epic Shards", "Health Buff", "Speedups"],
+              ["Sanct 3", "Speedups", "Teleports", "Shards", "Health Buff", "Speedups", "XP Hero", "Epic Shards", "Health Buff"],
+              ["Sanct 4", "Health Buff", "Speedups", "Teleports", "Conquest Books", "Teleports", "Speedups", "XP Hero", "Epic Shards"],
+              ["Sanct 5", "Shards", "Damage Buff", "Speedups", "Expedition Manuals", "Epic Shards", "Damage Buff", "Speedups", "XP Hero"],
+              ["Sanct 6", "Teleports", "Shards", "Damage Buff", "Speedups", "XP Hero", "Epic Shards", "Damage Buff", "Speedups"],
+              ["Sanct 7", "Speedups", "Teleports", "Shards", "Teleports", "Speedups", "XP Hero", "Epic Shards", "Damage Buff"],
+              ["Sanct 8", "Damage Buff", "Speedups", "Teleports", "XP Hero", "Teleports", "Speedups", "XP Hero", "Epic Shards"],
+              ["Sanct 9", "Shards", "Deployment Boost", "Speedups", "Damage Buff", "Epic Shards", "Deployment Boost", "Speedups", "XP Hero"],
+              ["Sanct 10", "Teleports", "Shards", "Deployment Boost", "Conquest Books", "XP Hero", "Epic Shards", "Deployment Boost", "Speedups"],
+              ["Sanct 11", "Speedups", "Teleports", "Shards", "Expedition Manuals", "Speedups", "XP Hero", "Epic Shards", "Deployment Boost"],
+              ["Sanct 12", "Deployment Boost", "Speedups", "Teleports", "Speedups", "Teleports", "Speedups", "XP Hero", "Epic Shards"]
+          ],
+          fortresses: [
+              ["Fortress 1", "Shards", "Enhancements", "Expedition Manuals", "Shards", "Shards", "Enhancements", "Expedition Manuals", "Shards"],
+              ["Fortress 2", "Conquest Books", "Shards", "Enhancements", "Conquest Books", "Conquest Books", "Shards", "Enhancements", "Conquest Books"],
+              ["Fortress 3", "Expedition Manuals", "Conquest Books", "Shards", "Enhancements", "Expedition Manuals", "Conquest Books", "Conquest Books", "Enhancements"],
+              ["Fortress 4", "Enhancements", "Expedition Manuals", "Conquest Books", "Shards", "Enhancements", "Expedition Manuals", "Shards", "Shards"]
+          ]
+      };
+
+      let activeMatrixMode = "sanctuaries";
+
+      // --- DRIFTING REALTIME SNOW GENERATOR ---
+      const snowEl = document.getElementById('snowfall');
+      const flakeCount = 38;
+      
+      for (let i = 0; i < flakeCount; i++) {
+          const flake = document.createElement('span');
+          flake.style.left = Math.random() * 100 + '%';
+          const duration = 8 + Math.random() * 12;
+          flake.style.animationDuration = duration + 's';
+          flake.style.animationDelay = (-Math.random() * duration) + 's';
+          flake.style.width = flake.style.height = (1.2 + Math.random() * 2.5) + 'px';
+          snowEl.appendChild(flake);
+      }
+
+      // --- MUSIC STATE PLATFORM QUEUE ---
+      const playlist = [
+          { title: "Winterfell Ambient", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+          { title: "Night Gathers (War Drums)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+          { title: "The Frozen Wall (Siege Theme)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+      ];
+      let currentTrackIndex = 0;
+      const audioPlayer = document.getElementById('audio-player');
+      const trackTitleDisplay = document.getElementById('current-track-title');
+
+      function loadTrack(index) {
+          currentTrackIndex = index;
+          audioPlayer.src = playlist[currentTrackIndex].url;
+          trackTitleDisplay.textContent = playlist[currentTrackIndex].title;
+      }
+
+      function safePlay() {
+          const playPromise = audioPlayer.play();
+          if (playPromise !== undefined) {
+              playPromise.catch(error => {
+                  console.log("Playback engine waiting on direct user interaction context.");
+              });
+          }
+      }
+
+      function nextTrack() {
+          currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+          loadTrack(currentTrackIndex);
+          safePlay();
+      }
+
+      function prevTrack() {
+          currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+          loadTrack(currentTrackIndex);
+          safePlay();
+      }
+
+      audioPlayer.onended = function() {
+          nextTrack();
+      };
+
+      // --- ROUTING ENGINE DISPLAY SWAPS ---
+      function toggleDropdown(event) {
+          event.stopPropagation();
+          const isExpanded = menu.classList.toggle('show');
+          dropBtn.setAttribute('aria-expanded', isExpanded);
+      }
+
+      function showPage(event, pageId) {
+          if (event) event.preventDefault();
+          
+          const pages = document.querySelectorAll('.page-section');
+          pages.forEach(page => page.classList.remove('active'));
+
+          const selectedPage = document.getElementById(pageId);
+          if (selectedPage) {
+              selectedPage.classList.add('active');
+          }
+          
+          menu.classList.remove('show');
+          dropBtn.setAttribute('aria-expanded', 'false');
+          window.scrollTo({ top: 120, behavior: 'smooth' });
+      }
+
+      window.onclick = function(event) {
+          if (!event.target.matches('.header-btn')) {
+              if (menu.classList.contains('show')) {
+                  menu.classList.remove('show');
+                  dropBtn.setAttribute('aria-expanded', 'false');
+              }
+          }
+      }
+
+      // --- APPLICATION MANAGEMENT ---
+      function submitApplication(e) {
+          e.preventDefault();
+          const tag = document.getElementById('identityTag').value;
+          const power = document.getElementById('powerLevel').value;
+          const text = document.getElementById('experienceText').value;
+
+          globalApplications.push({ tag, power, text, timestamp: new Date() });
+          alert(`Application for ${tag} flown via raven to Slickfinger!`);
+          document.getElementById('recruitmentForm').reset();
+      }
+
+      // --- STRATEGY CORE MANAGEMENT ---
+      function submitSurvey(e) {
+          e.preventDefault();
+          const val = document.getElementById('surveyInput').value;
+          globalStrategies.push({ strategy: val, timestamp: new Date() });
+          alert(`Strategy recorded: "${val}" has been uploaded to council archives.`);
+          document.getElementById('surveyInput').value = '';
+      }
+
+      // --- REWARDS TABLE MATRIX ENGINE ---
+      function getLootClass(lootName) {
+          if(lootName.includes("Shards") && !lootName.includes("Epic")) return "loot-shards";
+          if(lootName.includes("Buff") || lootName.includes("Boost")) return "loot-buff";
+          if(lootName.includes("Speedups")) return "loot-speed";
+          if(lootName.includes("Epic")) return "loot-epic";
+          return "loot-utility";
+      }
+
+      function buildMatrixTable() {
+          const headerRow = document.getElementById('matrixHeader');
+          const tbody = document.getElementById('matrixBody');
+          const structSelect = document.getElementById('structureSelect');
+          
+          headerRow.innerHTML = "<th>Structure</th>";
+          for(let p = 1; p <= 8; p++) {
+              headerRow.innerHTML += `<th>Phase ${p}</th>`;
+          }
+          
+          tbody.innerHTML = "";
+          const currentRows = matrixData[activeMatrixMode];
+          
+          structSelect.innerHTML = '<option value="none">-- Select Line --</option>';
+          
+          currentRows.forEach((rowData, rIndex) => {
+              const structName = rowData[0];
+              structSelect.innerHTML += `<option value="${rIndex}">${structName}</option>`;
+              
+              let trHtml = `<tr data-row-idx="${rIndex}"><td>${structName}</td>`;
+              for(let c = 1; c < rowData.length; c++) {
+                  const loot = rowData[c];
+                  trHtml += `<td data-col-idx="${c}"><span class="loot-tag ${getLootClass(loot)}">${loot}</span></td>`;
+              }
+              trHtml += '</tr>';
+              tbody.innerHTML += trHtml;
+          });
+
+          document.getElementById('phaseSelect').value = "none";
+      }
+
+      function switchMatrixTab(mode) {
+          activeMatrixMode = mode;
+          document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+          event.target.classList.add('active');
+          buildMatrixTable();
+      }
+
+      function highlightMatrixTable() {
+          const rowVal = document.getElementById('structureSelect').value;
+          const colVal = document.getElementById('phaseSelect').value;
+          
+          const tbody = document.getElementById('matrixBody');
+          tbody.querySelectorAll('tr').forEach(tr => tr.classList.remove('highlight-row'));
+          tbody.querySelectorAll('td').forEach(td => td.classList.remove('highlight-cell'));
+
+          if (rowVal !== "none" && colVal !== "none") {
+              const targetRow = tbody.querySelector(`tr[data-row-idx="${rowVal}"]`);
+              if(targetRow) {
+                  const targetCell = targetRow.querySelector(`td[data-col-idx="${colVal}"]`);
+                  if(targetCell) targetCell.classList.add('highlight-cell');
+              }
+          } else if (rowVal !== "none") {
+              const targetRow = tbody.querySelector(`tr[data-row-idx="${rowVal}"]`);
+              if(targetRow) targetRow.classList.add('highlight-row');
+          } else if (colVal !== "none") {
+              tbody.querySelectorAll(`td[data-col-idx="${colVal}"]`).forEach(td => td.classList.add('highlight-cell'));
+          }
+      }
+
+      // Initialize Core Engines
+      loadTrack(0);
+      buildMatrixTable();
+  </script>
+</body>
+</html>

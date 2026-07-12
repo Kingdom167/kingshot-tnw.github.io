@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Night's Watch | TNW Portal</title>
   
+  <!-- Google Fonts for Epic Fantasy Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
@@ -227,15 +229,12 @@
         position: absolute;
         background-color: var(--ink);
         min-width: 260px;
-        box-shadow: 0px -8px 24px rgba(0,0,0,0.8);
+        box-shadow: 0px 8px 24px rgba(0,0,0,0.8);
         border: 1px solid var(--line);
         z-index: 101;
         right: 50%;
         transform: translateX(50%);
-        
-        /* RECODED TO APPEAR ON TOP */
-        bottom: 100%;
-        margin-bottom: 12px;
+        margin-top: 12px;
     }
     .dropdown-content.show { display: block; }
     
@@ -653,27 +652,36 @@
 </head>
 <body>
 
+  <!-- DRIFTING SNOWFALL LAYER -->
   <div class="snowfall" id="snowfall"></div>
 
+  <!-- Top Banner -->
   <div class="top-banner">
     <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Logo" class="banner-logo">
     <span class="banner-title-prepend">THE NIGHT'S WATCH</span>
   </div>
 
+  <!-- Main Epic Header Section -->
   <header class="nights-watch-header">
     <div class="header-content">
+      <!-- Inverted Center Raven Logo -->
       <img src="https://cdn.discordapp.com/attachments/605031846459342868/1525507449795379360/IMG_7384.png?ex=6a53a306&is=6a525186&hm=05ef4ad05212870f67eae620b788647866452e2fd18b7c592cbf52f0808088ec&" alt="Night's Watch Logo" class="header-logo">
       
+      <!-- Subtitle -->
       <p class="header-est">EST. 8000 YEARS BEFORE THE CONQUEST</p>
       
+      <!-- Main Title -->
       <h1 class="header-title">THE NIGHT'S<br>WATCH</h1>
       
+      <!-- Quote -->
       <blockquote class="header-quote">“And now his watch is ended.”</blockquote>
       
+      <!-- Description -->
       <p class="header-desc">
         We are the sworn brothers of the Wall — an alliance forged in the long night, bound by oath, standing between the realms of men and the darkness beyond.
       </p>
       
+      <!-- MERGED INTERACTIVE BUTTON SYSTEM -->
       <div class="dropdown">
           <button class="header-btn font-display" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown(event)">NAVIGATE PORTAL ⚔️</button>
           <div class="dropdown-content" id="dropdownMenu">
@@ -691,6 +699,7 @@
     </div>
   </header>
 
+  <!-- ============================== ART SPRITE VECTOR EMBEDS ============================== -->
   <svg class="sprite" style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
     <defs>
       <symbol id="icon-bear" viewBox="0 0 64 64">
@@ -727,6 +736,7 @@
 
   <div class="container">
 
+      <!-- PAGE 1: DASHBOARD -->
       <div id="dashboard" class="page-section active">
           <div class="section-heading">
               <h2 class="font-display">Active Watch Operations</h2>
@@ -755,6 +765,7 @@
           </div>
       </div>
 
+      <!-- PAGE: SANCTUARY REWARDS MATRIX -->
       <div id="rewards" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Sanctuary Rewards Matrix</h2>
@@ -792,14 +803,17 @@
               <table class="matrix-table" id="rewardsTable">
                   <thead>
                       <tr id="matrixHeader">
-                          </tr>
+                          <!-- Dynamic Content Headers -->
+                      </tr>
                   </thead>
                   <tbody id="matrixBody">
-                      </tbody>
+                      <!-- Dynamic Content Lines -->
+                  </tbody>
               </table>
           </div>
       </div>
 
+      <!-- PAGE 2: KVK HISTORY -->
       <div id="history" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">KvK Battle History</h2>
@@ -927,6 +941,7 @@
           </div>
       </div>
 
+      <!-- PAGE 3: LEADERS COUNCILS -->
       <div id="leaders" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Command Structure</h2>
@@ -950,6 +965,7 @@
           </div>
       </div>
 
+      <!-- PAGE 4: KINGDOM RULES -->
       <div id="rules" class="page-section">
           <div class="panel">
               <div class="panel-title font-display">The Laws of Kingdom 167</div>
@@ -961,6 +977,7 @@
           </div>
       </div>
 
+      <!-- PAGE 5: GAME STRATEGY GUIDES -->
       <div id="guides" class="page-section">
           <div class="panel">
               <div class="panel-title font-display">Mastering the Bear Hunt</div>
@@ -972,6 +989,7 @@
           </div>
       </div>
 
+      <!-- PAGE 6: RECRUITMENT -->
       <div id="recruitment" class="page-section">
           <div class="slots-panel">
               <div class="slots-count">
@@ -992,7 +1010,7 @@
                       <input type="text" id="identityTag" required placeholder="e.g., Grenn_TNW">
                   </div>
                   <div class="form-group">
-                      <label pour="powerLevel">Current Heroic Power Level</label>
+                      <label for="powerLevel">Current Heroic Power Level</label>
                       <input type="text" id="powerLevel" required placeholder="e.g., 45,000,000">
                   </div>
                   <div class="form-group">
@@ -1004,6 +1022,7 @@
           </div>
       </div>
 
+      <!-- PAGE 7: GOVERNANCE SURVEYS -->
       <div id="governance" class="page-section">
           <div class="panel">
               <div class="panel-title font-display">Strategy Core Submission</div>
@@ -1031,6 +1050,7 @@
           </div>
       </div>
 
+      <!-- PAGE 8: CHRONICLES -->
       <div id="gallery" class="page-section">
           <div class="section-heading">
               <h2 class="font-display">Chronicles of the Wall</h2>
@@ -1045,6 +1065,7 @@
 
   </div>
 
+  <!-- PERSISTENT INTEGRATED TRACK CONTROLLER PLAYER FOOTER -->
   <div class="persistent-player-bar">
       <div class="player-info">
           <div class="track-label font-display">THE WALL CHRONICLES OST</div>
@@ -1060,6 +1081,7 @@
       </div>
   </div>
 
+  <!-- ============================== SCRIPTS AND INTERACTIONS ============================== -->
   <script>
       const menu = document.getElementById('dropdownMenu');
       const dropBtn = document.querySelector('.header-btn');
